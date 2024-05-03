@@ -11,7 +11,7 @@ pub mod auth {
     }
 
     pub async fn login(mut req: tide::Request<()>, conn_str: String) -> tide::Result<tide::Response> {
-        let creds: Creds = req.body_json().await.unwrap();
+        let creds: Creds = req.body_json().await.expect("error reading or parsing body");
         let client = get_connection(conn_str).await;
 
         let rows = client
