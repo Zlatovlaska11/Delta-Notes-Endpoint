@@ -25,7 +25,7 @@ pub mod auth {
             Ok(_) => {
                 let mut response = tide::Response::new(tide::StatusCode::Ok);
 
-                response.set_body("hello");
+                response.set_body("legit");
 
                 Ok(response)
             }
