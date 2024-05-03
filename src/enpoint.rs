@@ -16,7 +16,7 @@ pub mod server {
                 auth::auth::login(req, conn_str).await // Call the login function from within the closure
             }
         };
-        app.at("/auth").post(login);
+        app.at("/auth/login").post(login);
 
         Ok(app.into())
     }
