@@ -1,6 +1,7 @@
 pub mod db_work {
 
-    use tokio_postgres::{Client, Error, GenericClient, NoTls};
+    use async_std::println;
+    use tokio_postgres::{row, Client, Error, GenericClient, NoTls};
 
     pub async fn get_connection(conn_str: String) -> Client {
         // Create a connection string
@@ -48,5 +49,17 @@ pub mod db_work {
                 column1, column2, column3
             );
         }
+    }
+
+    pub async fn create_table(table_name: String, conn_str: String) {
+        let client = get_connection(conn_str).await;
+
+        let rows = client
+            .query(
+                "CREATE TABLE users ( username: text, password: text, mail: text) ",
+                &[],
+            )
+            .await
+            .unwrap();
     }
 }
