@@ -1,22 +1,10 @@
-use tide::{Request, prelude};
-use serde_json::Value as JsonValue;
+pub mod auth;
+pub mod database;
 
-#[tokio::main]
-async fn main() {
-    
-    let mut app = tide::Server::new();
+pub mod enpoint;
 
+#[shuttle_runtime::main]
+async fn tide(#[shuttle_shared_db::Postgres] conn_str: String) -> shuttle_tide::ShuttleTide<()> {
+    enpoint::server::start_server(conn_str).await
 
-    let check_acces = |mut req: Request<()>| async move {
-        let body: JsonValue = req.body_json().await.unwrap();
-
-        let file_name = body["filename"];
-
-    };
-
-    app.at("/getNotes").post();
-    app.listen("127.0.0.1:8080").await.unwrap();
 }
-
-
-
