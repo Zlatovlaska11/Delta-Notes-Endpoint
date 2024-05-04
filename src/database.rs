@@ -6,7 +6,7 @@ pub mod db_work {
         // Create a connection string
 
         // Parse the connection string
-        let (client, connection) = tokio_postgres::connect(&conn_str, NoTls).await.unwrap();
+        let (client, _connection) = tokio_postgres::connect(&conn_str, NoTls).await.unwrap();
 
         // Spawn a task to process the connection
 

@@ -1,5 +1,7 @@
 pub mod server {
 
+    use tide::{http::headers::HeaderValue, security::CorsMiddleware};
+
     use crate::auth::{self};
 
     pub async fn start_server(conn_str: String) -> shuttle_tide::ShuttleTide<()> {
@@ -7,7 +9,21 @@ pub mod server {
 
         println!("server bound");
 
-        app.with(tide::log::LogMiddleware::new());
+        app.with(
+            CorsMiddleware::new()
+                .allow_methods(
+                    "GET, POST, PUT, DELETE, OPTIONS"
+                        .parse::<HeaderValue>()
+                        .unwrap(),
+                )
+                .allow_origin("*")
+                .allow_credentials(true)
+                .allow_headers(
+                    "Content-Type, Authorization"
+                        .parse::<HeaderValue>()
+                        .unwrap(),
+                ),
+        );
 
         let login = move |req: tide::Request<()>| {
             let conn_str = conn_str.clone(); // Clone the connection string to move into the closure
