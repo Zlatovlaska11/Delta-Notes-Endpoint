@@ -13,6 +13,7 @@ pub mod server {
             let conn_str = conn_str.clone(); // Clone the connection string to move into the closure
 
             async move {
+                println!("request accepted");
                 auth::auth::login(req, conn_str).await // Call the login function from within the closure
             }
         };
