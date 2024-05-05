@@ -6,9 +6,14 @@ pub mod db_work {
         // Create a connection string
 
         // Parse the connection string
-        let (client, _connection) = tokio_postgres::connect(&conn_str, NoTls).await.unwrap();
+        let (client, connection) = tokio_postgres::connect(&conn_str, NoTls).await.unwrap();
 
         // Spawn a task to process the connection
+        tokio::spawn(async move {
+            if let Err(e) = connection.await {
+                eprintln!("connection error: {}", e);
+            }
+        });
 
         client
     }

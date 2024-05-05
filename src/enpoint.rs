@@ -25,15 +25,21 @@ pub mod server {
                 ),
         );
 
+        let cns = conn_str.clone(); // Clone the connection string to move into the closure
         let login = move |req: tide::Request<()>| {
-            let conn_str = conn_str.clone(); // Clone the connection string to move into the closure
+            let constr = conn_str.clone(); // Clone the connection string to move into the closure
 
             async move {
                 println!("request accepted");
-                auth::auth::login(req, conn_str).await // Call the login function from within the closure
+                auth::auth::login(req, constr).await // Call the login function from within the closure
             }
         };
+
+        let register = move |req: tide::Request<()>| {
+            auth::auth::
+        };
         app.at("/auth/login").post(login);
+        app.at("/auth/register").post(login);
 
         Ok(app.into())
     }

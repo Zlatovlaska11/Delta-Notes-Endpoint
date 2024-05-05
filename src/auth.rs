@@ -1,5 +1,6 @@
 pub mod auth {
     use crate::database::db_work::get_connection;
+    use async_std::{print, println};
     use serde::{Deserialize, Serialize};
     use tide::{http::Response, ResponseBuilder};
     use tokio_postgres::{row, Client, GenericClient, NoTls};
@@ -35,12 +36,13 @@ pub mod auth {
 
                 Ok(response)
             }
-            Err(_) => {
+            Err(e) => {
                 let mut resp = tide::Response::new(tide::StatusCode::Unauthorized);
                 let serialized = serde_json::to_string(&creds).unwrap();
-                resp.set_body(serialized);
+                resp.set_body(e.to_string());
                 Ok(resp.into())
             }
         }
     }
+
 }
