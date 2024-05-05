@@ -1,17 +1,23 @@
 pub mod auth {
-    use serde::Deserialize;
+    use crate::database::db_work::get_connection;
+    use serde::{Deserialize, Serialize};
     use tide::{http::Response, ResponseBuilder};
     use tokio_postgres::{row, Client, GenericClient, NoTls};
-    use crate::database::db_work::get_connection;
 
-    #[derive(Deserialize)]
+    #[derive(Deserialize, Serialize)]
     struct Creds {
         username: String,
         password: String,
     }
 
-    pub async fn login(mut req: tide::Request<()>, conn_str: String) -> tide::Result<tide::Response> {
-        let creds: Creds = req.body_json().await.expect("error reading or parsing body");
+    pub async fn login(
+        mut req: tide::Request<()>,
+        conn_str: String,
+    ) -> tide::Result<tide::Response> {
+        let creds: Creds = req
+            .body_json()
+            .await
+            .expect("error reading or parsing body");
         let client = get_connection(conn_str).await;
 
         let rows = client
@@ -29,7 +35,12 @@ pub mod auth {
 
                 Ok(response)
             }
-            Err(_) => Ok(tide::Response::new(tide::StatusCode::Unauthorized))
+            Err(_) => {
+                let mut resp = tide::Response::new(tide::StatusCode::Unauthorized);
+                let serialized = serde_json::to_string(&creds).unwrap();
+                resp.set_body(serialized);
+                Ok(resp.into())
+            }
         }
     }
 }
