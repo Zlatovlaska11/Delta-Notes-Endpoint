@@ -23,7 +23,7 @@ pub mod auth {
         let rows = client
             .query(
                 "SELECT * FROM users WHERE password = $1 and username = $2;",
-                &[&creds.password, &creds.username],
+                &[&creds.password.replace("\"", "'"), &creds.username.replace("\"", "'")],
             )
             .await;
 
