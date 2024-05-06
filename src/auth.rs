@@ -24,17 +24,25 @@ pub mod auth {
         let rows = client
             .query(
                 "SELECT * FROM users WHERE password = $1 and username = $2;",
-                &[&creds.password.replace("\"", "'"), &creds.username.replace("\"", "'")],
+                &[
+                    &creds.password.replace("\"", "'"),
+                    &creds.username.replace("\"", "'"),
+                ],
             )
             .await;
 
         match rows {
-            Ok(_) => {
+            Ok(rows) => {
                 let mut response = tide::Response::new(tide::StatusCode::Ok);
 
-                response.set_body("legit");
+                if rows.len() == 1 {
+                    response.set_body("legit");
 
-                Ok(response)
+                    Ok(response)
+                } else {
+                    let resp = tide::Response::new(tide::StatusCode::Unauthorized);
+                    Ok(resp.into())
+                }
             }
             Err(e) => {
                 let mut resp = tide::Response::new(tide::StatusCode::Unauthorized);
@@ -44,5 +52,4 @@ pub mod auth {
             }
         }
     }
-
 }
