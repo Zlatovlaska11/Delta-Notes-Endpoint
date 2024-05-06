@@ -11,6 +11,15 @@ pub mod auth {
         password: String,
     }
 
+
+    #[derive(Deserialize, Serialize)]
+    struct CredsReg {
+        username: String,
+        password: String,
+        mail: String
+    }
+
+
     pub async fn login(
         mut req: tide::Request<()>,
         conn_str: String,
@@ -51,5 +60,28 @@ pub mod auth {
                 Ok(resp.into())
             }
         }
+    }
+
+
+    pub async fn register(mut req: tide::Request<()>, conn_str: String) -> tide::Result<tide::Response>{
+
+        let client = get_connection(conn_str).await;
+
+                
+        let creds: CredsReg = req
+            .body_json()
+            .await
+            .expect("error reading or parsing body");
+
+        
+        
+        let rows = client.query("INSERT INTO users (username, password, mail) VALUES ($1, $2, $3);", &[&creds.username.replace("\"", "'"), &creds.password.replace("\"", "'"), &creds.mail.replace("\"", "'")]).await;
+
+        match rows {
+            Ok(rws) => Ok(tide::Response::new(tide::StatusCode::Ok)),
+            Err(_) => Ok(tide::Response::new(tide::StatusCode::Unauthorized)),
+        }
+        
+
     }
 }

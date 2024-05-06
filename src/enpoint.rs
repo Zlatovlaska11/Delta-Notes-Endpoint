@@ -36,10 +36,12 @@ pub mod server {
         };
 
         let register = move |req: tide::Request<()>| {
-            auth::auth::
+            let cnstr = cns.clone();
+            async move { auth::auth::register(req, cnstr).await }
         };
+
         app.at("/auth/login").post(login);
-        app.at("/auth/register").post(login);
+        app.at("/auth/register").post(register);
 
         Ok(app.into())
     }
