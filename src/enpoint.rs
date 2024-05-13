@@ -42,10 +42,7 @@ pub mod server {
 
         let upload = move |reg: tide::Request<()>| {
             let status = filebucket::filebucket::get_files();
-            async move {
-                
-                status.await
-            }
+            async move { status.await }
         };
 
         app.at("/auth/login").post(login);
