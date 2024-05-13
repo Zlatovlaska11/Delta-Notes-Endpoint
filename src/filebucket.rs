@@ -6,7 +6,7 @@ pub mod filebucket {
     use unofficial_appwrite::id::ID;
     use unofficial_appwrite::services::server::storage::{self, Storage};
 
-    pub async fn get_files() -> Result<(), Error> {
+    pub async fn get_files() -> Result<tide::StatusCode, tide::Error> {
         let client = ClientBuilder::default()
             .set_endpoint("https://cloud.appwrite.io/v1")
             .unwrap()
@@ -22,7 +22,7 @@ pub mod filebucket {
 
         let get_file = Storage::get_file(&client, "661...e9", "661...71e").await?;
         dbg!(get_file);
-        Ok(())
+        Ok(tide::StatusCode::Ok)
         //.set_self_signed(false)? // Use only on dev mode with a self-signed SSL cert
     }
 }

@@ -2,7 +2,7 @@ pub mod server {
 
     use tide::{http::headers::HeaderValue, security::CorsMiddleware};
 
-    use crate::auth::{self};
+    use crate::{auth, filebucket};
 
     pub async fn start_server(conn_str: String) -> shuttle_tide::ShuttleTide<()> {
         let mut app = tide::new();
@@ -40,8 +40,17 @@ pub mod server {
             async move { auth::auth::register(req, cnstr).await }
         };
 
+        let upload = move |reg: tide::Request<()>| {
+            let status = filebucket::filebucket::get_files();
+            async move {
+                
+                status.await
+            }
+        };
+
         app.at("/auth/login").post(login);
         app.at("/auth/register").post(register);
+        app.at("/file/upload").post(upload);
 
         Ok(app.into())
     }
