@@ -9,6 +9,7 @@ dependencies = [
  "async-std",
  "dotenv",
  "dotenvy",
+ "femme",
  "serde",
  "serde_json",
  "shuttle-runtime",

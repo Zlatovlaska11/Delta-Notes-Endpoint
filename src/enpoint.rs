@@ -40,15 +40,11 @@ pub mod server {
             async move { auth::auth::register(req, cnstr).await }
         };
 
-        let upload = move |reg: tide::Request<()>| {
-            let status = filebucket::filebucket::get_files();
-            async move { status.await }
-        };
 
         app.at("/auth/login").post(login);
         app.at("/auth/register").post(register);
-        app.at("/file/upload").post(upload);
-
+        
+        app.at("/src/*").serve_dir("files/")?;
         Ok(app.into())
     }
 }
