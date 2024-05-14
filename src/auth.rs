@@ -1,9 +1,7 @@
 pub mod auth {
     use crate::database::db_work::get_connection;
-    use async_std::{print, println};
+
     use serde::{Deserialize, Serialize};
-    use tide::{http::Response, ResponseBuilder};
-    use tokio_postgres::{row, Client, GenericClient, NoTls};
 
     #[derive(Deserialize, Serialize)]
     struct Creds {
@@ -11,14 +9,12 @@ pub mod auth {
         password: String,
     }
 
-
     #[derive(Deserialize, Serialize)]
     struct CredsReg {
         username: String,
         password: String,
-        mail: String
+        mail: String,
     }
-
 
     pub async fn login(
         mut req: tide::Request<()>,
@@ -55,33 +51,38 @@ pub mod auth {
             }
             Err(e) => {
                 let mut resp = tide::Response::new(tide::StatusCode::Unauthorized);
-                let serialized = serde_json::to_string(&creds).unwrap();
+                let _serialized = serde_json::to_string(&creds).unwrap();
                 resp.set_body(e.to_string());
                 Ok(resp.into())
             }
         }
     }
 
-
-    pub async fn register(mut req: tide::Request<()>, conn_str: String) -> tide::Result<tide::Response>{
-
+    pub async fn register(
+        mut req: tide::Request<()>,
+        conn_str: String,
+    ) -> tide::Result<tide::Response> {
         let client = get_connection(conn_str).await;
 
-                
         let creds: CredsReg = req
             .body_json()
             .await
             .expect("error reading or parsing body");
 
-        
-        
-        let rows = client.query("INSERT INTO users (username, password, mail) VALUES ($1, $2, $3);", &[&creds.username.replace("\"", "'"), &creds.password.replace("\"", "'"), &creds.mail.replace("\"", "'")]).await;
+        let rows = client
+            .query(
+                "INSERT INTO users (username, password, mail) VALUES ($1, $2, $3);",
+                &[
+                    &creds.username.replace("\"", "'"),
+                    &creds.password.replace("\"", "'"),
+                    &creds.mail.replace("\"", "'"),
+                ],
+            )
+            .await;
 
         match rows {
-            Ok(rws) => Ok(tide::Response::new(tide::StatusCode::Ok)),
+            Ok(_) => Ok(tide::Response::new(tide::StatusCode::Ok)),
             Err(_) => Ok(tide::Response::new(tide::StatusCode::Unauthorized)),
         }
-        
-
     }
 }
