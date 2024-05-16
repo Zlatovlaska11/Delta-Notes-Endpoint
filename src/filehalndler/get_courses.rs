@@ -4,16 +4,14 @@ pub mod courses {
         fs::{self, read_dir},
     };
 
-    
-
     #[derive(Debug, Clone)]
-    struct Course {
+    pub struct Course {
         sections: HashMap<String, Vec<String>>,
         files_count: u32,
     }
 
     #[derive(Debug, Clone)]
-    enum Courses {
+    pub enum Courses {
         Czech { course: Course },
         Chemistry { course: Course },
         Tech { course: Course },

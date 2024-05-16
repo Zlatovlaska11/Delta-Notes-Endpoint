@@ -47,6 +47,8 @@ pub mod server {
         app.at("/auth/login").post(login);
         app.at("/auth/register").post(register);
 
+
+
         app.at("/file/:filename").get(|req: Request<()>| async move {
         // Extract filename from the request path
         let filename: String = req.param("filename").unwrap_or_default().to_string();
