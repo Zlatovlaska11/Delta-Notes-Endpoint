@@ -1,35 +1,68 @@
 pub mod courses {
     use std::{
         collections::HashMap,
+        default,
         fs::{self, read_dir, FileType},
     };
+
+    use std::error::Error;
+
     #[derive(Debug, Clone)]
-    struct course {
+    struct Course {
         sections: HashMap<String, Vec<String>>,
         files_count: u32,
     }
 
     #[derive(Debug, Clone)]
     enum Courses {
-        Czech(Vec<course>),
-        Chemistry(Vec<course>),
-        English(Vec<course>),
-        Tech(Vec<course>),
-        Networking(Vec<course>),
-        Physics(Vec<course>),
+        Czech(Course),
+        Chemistry(Course),
+        Tech(Course),
+        Networking(Course),
+        Physics(Course),
     }
 
-    impl Courses {
-        fn new(id: u32) -> Courses {
+    trait FileWork {
+        fn new(&self, id: u32) -> Result<Courses, ()>;
+
+        fn course_files(&self, file_path: String) -> Vec<String>;
+
+        fn get_full_course(self, subject_filepath: String) -> HashMap<String, Vec<String>>;
+    }
+
+    impl FileWork for Courses {
+        fn new(&self, id: u32) -> Result<Courses, ()> {
+            let dirs: [String; 5] = [
+                "Český jazyk a literatura 1.A (2023⧸24)".to_string(),
+                "Přírodní vědy 1.A, 1.B (Eko, Bi, Ch) (2023⧸24)".to_string(),
+                "Výpočetní technika 1".to_string(),
+                "Počítačové systémy a sítě 1.A (Drvota, 2023⧸24)".to_string(),
+                "Fyzika 1.ročník (2023⧸24)".to_string(),
+            ];
+
+            let files = self.clone().get_full_course(dirs[0].to_string());
+
+            let course: Course = Course {
+                sections: files.clone(),
+                files_count: files.keys().count() as u32,
+            };
+
             match id {
-                0 => todo!(),
-                _ => todo!(),
+                0 => Ok(Courses::Czech(course)),
+                1 => Ok(Courses::Chemistry(course)),
+                2 => Ok(Courses::Tech(course)),
+                3 => Ok(Courses::Networking(course)),
+                4 => Ok(Courses::Physics(course)),
+                default => Err(()),
             }
         }
 
-        pub fn course_files(&self, file_path: String) -> Vec<String> {
+        fn course_files(&self, file_path: String) -> Vec<String> {
             let mut files: Vec<String> = Vec::new();
             let paths = fs::read_dir(file_path).unwrap();
+
+            // add here the recursive file explore because of some subjects have more layers of
+            // files
 
             for path in paths {
                 if path
@@ -48,7 +81,7 @@ pub mod courses {
             files
         }
 
-        pub fn get_full_course(self, subject_filepath: String) -> HashMap<String, Vec<String>> {
+        fn get_full_course(self, subject_filepath: String) -> HashMap<String, Vec<String>> {
             let mut map: HashMap<String, Vec<String>> = HashMap::new();
 
             for file in read_dir(subject_filepath.clone()).expect("something wrong") {
@@ -60,7 +93,7 @@ pub mod courses {
                                 .path()
                                 .to_path_buf()
                                 .to_string_lossy()
-                                    .to_string(),
+                                .to_string(),
                         ),
                     );
                 }
