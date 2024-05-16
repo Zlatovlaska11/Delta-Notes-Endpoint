@@ -1,11 +1,10 @@
 pub mod courses {
     use std::{
         collections::HashMap,
-        default,
-        fs::{self, read_dir, FileType},
+        fs::{self, read_dir},
     };
 
-    use std::error::Error;
+    
 
     #[derive(Debug, Clone)]
     struct Course {
@@ -15,11 +14,11 @@ pub mod courses {
 
     #[derive(Debug, Clone)]
     enum Courses {
-        Czech(Course),
-        Chemistry(Course),
-        Tech(Course),
-        Networking(Course),
-        Physics(Course),
+        Czech { course: Course },
+        Chemistry { course: Course },
+        Tech { course: Course },
+        Networking { course: Course },
+        Physics { course: Course },
     }
 
     trait FileWork {
@@ -48,12 +47,12 @@ pub mod courses {
             };
 
             match id {
-                0 => Ok(Courses::Czech(course)),
-                1 => Ok(Courses::Chemistry(course)),
-                2 => Ok(Courses::Tech(course)),
-                3 => Ok(Courses::Networking(course)),
-                4 => Ok(Courses::Physics(course)),
-                default => Err(()),
+                0 => Ok(Courses::Czech { course }),
+                1 => Ok(Courses::Chemistry { course }),
+                2 => Ok(Courses::Tech { course }),
+                3 => Ok(Courses::Networking { course }),
+                4 => Ok(Courses::Physics { course }),
+                _default => Err(()),
             }
         }
 
@@ -102,7 +101,7 @@ pub mod courses {
         }
     }
 
-    fn get_list(course_id: u32) {
-        let mut topics: Vec<String> = Vec::new();
+    fn get_list(_course_id: u32) {
+        let _topics: Vec<String> = Vec::new();
     }
 }
