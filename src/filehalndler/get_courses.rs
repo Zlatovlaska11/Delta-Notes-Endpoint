@@ -6,8 +6,8 @@ pub mod courses {
 
     #[derive(Debug, Clone)]
     pub struct Course {
-        sections: HashMap<String, Vec<String>>,
-        files_count: u32,
+        pub sections: HashMap<String, Vec<String>>,
+        pub files_count: u32,
     }
 
     #[derive(Debug, Clone)]
