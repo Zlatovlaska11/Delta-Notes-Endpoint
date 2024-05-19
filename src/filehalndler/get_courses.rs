@@ -1,7 +1,7 @@
 pub mod courses {
     use std::{
         collections::HashMap,
-        fs::{self, read_dir},
+        fs::{self, read_dir}, ops::Deref,
     };
 
     #[derive(Debug, Clone)]
@@ -17,43 +17,21 @@ pub mod courses {
         Tech { course: Course },
         Networking { course: Course },
         Physics { course: Course },
+        Error,
     }
 
-    trait FileWork {
-        fn new(&self, id: u32) -> Result<Courses, ()>;
+    trait FileGetting {
+        
+        fn get_files(&self, section: String, filename: String) -> String;
+    }
 
+    trait PreparingCourses {
         fn course_files(&self, file_path: String) -> Vec<String>;
 
         fn get_full_course(self, subject_filepath: String) -> HashMap<String, Vec<String>>;
     }
 
-    impl FileWork for Courses {
-        fn new(&self, id: u32) -> Result<Courses, ()> {
-            let dirs: [String; 5] = [
-                "Český jazyk a literatura 1.A (2023⧸24)".to_string(),
-                "Přírodní vědy 1.A, 1.B (Eko, Bi, Ch) (2023⧸24)".to_string(),
-                "Výpočetní technika 1".to_string(),
-                "Počítačové systémy a sítě 1.A (Drvota, 2023⧸24)".to_string(),
-                "Fyzika 1.ročník (2023⧸24)".to_string(),
-            ];
-
-            let files = self.clone().get_full_course(dirs[0].to_string());
-
-            let course: Course = Course {
-                sections: files.clone(),
-                files_count: files.keys().count() as u32,
-            };
-
-            match id {
-                0 => Ok(Courses::Czech { course }),
-                1 => Ok(Courses::Chemistry { course }),
-                2 => Ok(Courses::Tech { course }),
-                3 => Ok(Courses::Networking { course }),
-                4 => Ok(Courses::Physics { course }),
-                _default => Err(()),
-            }
-        }
-
+    impl PreparingCourses for Course {
         fn course_files(&self, file_path: String) -> Vec<String> {
             let mut files: Vec<String> = Vec::new();
             let paths = fs::read_dir(file_path).unwrap();
@@ -99,7 +77,46 @@ pub mod courses {
         }
     }
 
-    fn get_list(_course_id: u32) {
-        let _topics: Vec<String> = Vec::new();
+    impl Courses {
+        pub fn new(id: u32) -> Self {
+            let crs: Courses;
+            let course: Course = Course {
+                files_count: u32::MAX,
+                sections: HashMap::new(),
+            };
+
+            let dirs: [String; 5] = [
+                "public/files/Český jazyk a literatura 1.A (2023⧸24)".to_string(),
+                "public/files/Přírodní vědy 1.A, 1.B (Eko, Bi, Ch) (2023⧸24)".to_string(),
+                "public/files/Výpočetní technika 1".to_string(),
+                "public/files/Počítačové systémy a sítě 1.A (Drvota, 2023⧸24)".to_string(),
+                "public/files/Fyzika 1.ročník (2023⧸24)".to_string(),
+            ];
+            let files = course
+                .clone()
+                .get_full_course(dirs[id as usize].to_string());
+
+            let course: Course = Course {
+                sections: files.clone(),
+                files_count: files.keys().count() as u32,
+            };
+            match id {
+                0 => crs = Courses::Czech { course },
+                1 => crs = Courses::Chemistry { course },
+                2 => crs = Courses::Tech { course },
+                3 => crs = Courses::Networking { course },
+                4 => crs = Courses::Physics { course },
+                _default => return Courses::Error,
+            }
+
+            crs
+        }
     }
+
+    impl FileGetting for Courses {
+        fn get_files(&self, section: String, filename: String) -> String {
+        }
+        // add code here
+    }
+
 }
