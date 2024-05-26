@@ -1,7 +1,7 @@
 pub mod courses {
-    use std::fs;
+    use std::{fs, io::{Error, ErrorKind}};
 
-    pub fn get_files(filename: String, coure_id: u8) -> Result<String, ()> {
+    pub fn get_course_filepath(id: u8) -> Result<String, Error> {
         let dirs: [String; 5] = [
             "public/files/Český jazyk a literatura 1.A (2023⧸24)".to_string(),
             "public/files/Přírodní vědy 1.A, 1.B (Eko, Bi, Ch) (2023⧸24)".to_string(),
@@ -10,12 +10,22 @@ pub mod courses {
             "public/files/Fyzika 1.ročník (2023⧸24)".to_string(),
         ];
 
-        let file = get_file(filename, dirs[coure_id as usize].clone());
+        if dirs.len() > id as usize {
+            return Err(Error::from(ErrorKind::InvalidInput))
+        }
+
+        Ok(dirs[id as usize].clone())
+    }
+
+    pub fn get_files(filename: String, coure_id: u8) -> Result<String, std::io::Error> {
+        let dir = get_course_filepath(coure_id);
+
+        let file = get_file(filename, dir?);
 
         file
     }
 
-    fn get_file(filename: String, folder: String) -> Result<String, ()> {
+    fn get_file(filename: String, folder: String) -> Result<String, std::io::Error> {
         let paths = fs::read_dir(folder.clone()).unwrap();
 
         for path in paths {
@@ -40,6 +50,6 @@ pub mod courses {
             }
         }
 
-        Err(())
+        Err(Error::from(ErrorKind::Other))
     }
 }
