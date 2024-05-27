@@ -10,7 +10,7 @@ pub mod courses {
             "public/files/Fyzika 1.ročník (2023⧸24)".to_string(),
         ];
 
-        if dirs.len() > id as usize {
+        if dirs.len() < id as usize {
             return Err(Error::from(ErrorKind::InvalidInput))
         }
 
