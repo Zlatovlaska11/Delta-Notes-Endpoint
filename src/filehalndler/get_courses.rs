@@ -1,5 +1,8 @@
 pub mod courses {
-    use std::{fs, io::{Error, ErrorKind}};
+    use std::{
+        fs,
+        io::{Error, ErrorKind},
+    };
 
     pub fn get_course_filepath(id: u8) -> Result<String, Error> {
         let dirs: [String; 5] = [
@@ -11,7 +14,7 @@ pub mod courses {
         ];
 
         if dirs.len() < id as usize {
-            return Err(Error::from(ErrorKind::InvalidInput))
+            return Err(Error::from(ErrorKind::InvalidInput));
         }
 
         Ok(dirs[id as usize].clone())

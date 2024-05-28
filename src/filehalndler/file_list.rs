@@ -1,21 +1,17 @@
 pub mod get_files {
 
-    use std::fs;
+    use std::fs::{self, FileType};
 
     use crate::filehalndler::get_courses::courses::get_course_filepath;
-    use async_std::fs::ReadDir;
     use serde::{self, Deserialize, Serialize};
 
     #[derive(Serialize, Deserialize, Debug, Clone)]
-    struct CoureFile {
-        filename: String,
-        filepath: String,
+    pub struct CoureFile {
+        pub filename: String,
+        pub filepath: String,
     }
 
-    pub fn get_list(
-        id: u8,
-        filepath: Option<String>,
-    ) -> Result<Vec<serde_json::Value>, std::io::Error> {
+    pub fn get_list(id: u8, filepath: Option<String>) -> Result<Vec<CoureFile>, std::io::Error> {
         let paths;
 
         if filepath.is_some() {
@@ -26,23 +22,40 @@ pub mod get_files {
             paths = fs::read_dir(dir.clone()).unwrap();
         }
 
-        let mut vec: Vec<serde_json::Value> = Vec::new();
+        let mut vec: Vec<CoureFile> = Vec::new();
 
         for path in paths {
             if path.as_ref().unwrap().metadata().unwrap().is_dir() {
                 let pth = path.as_ref().unwrap().path().display().to_string();
 
-                vec.push(serde_json::Value::Array(get_list(id, Some(pth)).unwrap()));
+                for x in get_list(id, Some(pth)).unwrap() {
+                    vec.push(x)
+                }
             }
-
-            vec.push(serde_json::json!(CoureFile {
-                filename: path.as_ref().unwrap().file_name().into_string().unwrap(),
-                filepath: path
-                    .expect("error with the json")
+            if path
+                .as_ref()
+                .unwrap()
+                .path()
+                .display()
+                .to_string()
+                .contains("pptx")
+                || path
+                    .as_ref()
+                    .unwrap()
                     .path()
                     .display()
-                    .to_string(),
-            }));
+                    .to_string()
+                    .contains("ppt")
+            {
+                vec.push(CoureFile {
+                    filename: path.as_ref().unwrap().file_name().into_string().unwrap(),
+                    filepath: path
+                        .expect("error with the json")
+                        .path()
+                        .display()
+                        .to_string(),
+                });
+            }
         }
 
         Ok(vec)
