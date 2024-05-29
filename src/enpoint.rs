@@ -6,7 +6,10 @@ pub mod server {
         http::headers::HeaderValue, security::CorsMiddleware, Request, Response, StatusCode,
     };
 
-    use crate::{auth, filehalndler::file_serving::file_serve::serve_file};
+    use crate::{
+        auth, filehalndler::file_serving::file_serve::pptx_viewer,
+        filehalndler::file_serving::file_serve::serve_file,
+    };
 
     pub async fn start_server(conn_str: String) -> shuttle_tide::ShuttleTide<()> {
         let mut app = tide::new();
@@ -47,7 +50,8 @@ pub mod server {
         app.at("/auth/login").post(login);
         app.at("/auth/register").post(register);
 
-        app.at("/file/:filename").get(serve_file);
+        app.at("file/:filename").get(serve_file);
+        app.at("/pptx").get(pptx_viewer);
         Ok(app.into())
     }
 }
