@@ -6,7 +6,7 @@ pub mod server {
         http::headers::HeaderValue, security::CorsMiddleware, Request, Response, StatusCode,
     };
 
-    use crate::auth;
+    use crate::{auth, filehalndler::file_serving::file_serve::serve_file};
 
     pub async fn start_server(conn_str: String) -> shuttle_tide::ShuttleTide<()> {
         let mut app = tide::new();
@@ -46,33 +46,8 @@ pub mod server {
 
         app.at("/auth/login").post(login);
         app.at("/auth/register").post(register);
-        
 
-
-
-        app.at("/file/:filename").get(|req: Request<()>| async move {
-
-        let filename: String = req.param("filename").unwrap_or_default().to_string();
-
-        let filename = format!("public/files/{}", filename);
-        if let Ok(mut file) = File::open(&filename) {
-            let mut contents = Vec::new();
-            file.read_to_end(&mut contents)?;
-
-            let content_type = match filename.split('.').last() {
-                Some("pptx") => "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                _ => "application/octet-stream", // fallback to binary data
-            };
-
-            let mut response = Response::new(StatusCode::Ok);
-            response.set_body(contents);
-            response.insert_header("Content-Type", content_type);
-
-            Ok(response)
-        } else {
-            Ok(Response::new(StatusCode::NotFound))
-        }
-    });
+        app.at("/file/:filename").get(serve_file);
         Ok(app.into())
     }
 }

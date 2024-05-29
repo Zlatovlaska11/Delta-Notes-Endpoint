@@ -20,7 +20,7 @@ pub mod courses {
         Ok(dirs[id as usize].clone())
     }
 
-    pub fn get_files(filename: String, coure_id: u8) -> Result<String, std::io::Error> {
+    pub fn get_filepath(filename: String, coure_id: u8) -> Result<String, std::io::Error> {
         let dir = get_course_filepath(coure_id);
 
         let file = get_file(filename, dir?);
