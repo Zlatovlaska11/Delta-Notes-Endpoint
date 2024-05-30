@@ -28,6 +28,5 @@ pub mod handler {
         let filepath = get_courses::courses::get_filepath(filename, id).unwrap();
 
         tide::Response::new(200)
-        
     }
 }
