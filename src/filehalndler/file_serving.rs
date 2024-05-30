@@ -1,7 +1,7 @@
 pub mod file_serve {
 
     use serde::Deserialize;
-    use tide::{self, http::url, Redirect, Request, Response, StatusCode};
+    use tide::{self, Redirect, Request, Response, StatusCode};
     use urlencoding::encode;
 
     use crate::filehalndler::get_courses::courses::get_filepath;
