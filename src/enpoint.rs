@@ -57,6 +57,7 @@ pub mod server {
             // Extract filename from the request path
             let filename: String = req.param("filename").unwrap_or_default().to_string();
             let filename = urlencoding::decode(&filename).unwrap();
+            print!("{}", filename);
 
             // Attempt to open the file
             if let Ok(mut file) = File::open(&*filename) {
