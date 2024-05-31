@@ -38,7 +38,7 @@ pub mod file_serve {
         let host = "http://127.0.0.1:9000".to_string();
         let office_viewer_url = format!(
             "https://view.officeapps.live.com/op/view.aspx?src={}",
-            (&format!("{}/files/{}", host, path))
+            (&format!("{}/files/{}", host, path.replace("/public/", "")))
         );
         print!("{}", office_viewer_url);
         Ok(Redirect::new(office_viewer_url).into())
