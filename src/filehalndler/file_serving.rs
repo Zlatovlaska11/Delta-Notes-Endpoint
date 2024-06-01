@@ -35,10 +35,10 @@ pub mod file_serve {
         let path = encode(path.as_ref());
 
         //NEEDS TO BE DELETED
-        let host = "http://127.0.0.1:9000".to_string();
+        let host = "https://zlatovlas-delta-notes.shuttleapp.rs".to_string();
         let office_viewer_url = format!(
             "https://view.officeapps.live.com/op/view.aspx?src={}",
-            (&format!("{}/files/{}", host, path.replace("/public/", "")))
+            (&format!("{}/fls/{}", host, path))
         );
         print!("{}", office_viewer_url);
         Ok(Redirect::new(office_viewer_url).into())
