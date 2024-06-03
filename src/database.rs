@@ -1,6 +1,6 @@
 pub mod db_work {
 
-    use tokio_postgres::{Client, GenericClient, NoTls};
+    use tokio_postgres::{Client, NoTls};
 
     pub async fn get_connection(conn_str: String) -> Client {
         // Create a connection string

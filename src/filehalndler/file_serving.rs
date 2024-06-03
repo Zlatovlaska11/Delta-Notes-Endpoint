@@ -34,7 +34,6 @@ pub mod file_serve {
         print!("{}", &path[6..path.len()]);
         let path = encode(path[6..path.len()].as_ref());
 
-        //NEEDS TO BE DELETED
         let host = "pup-settled-dolphin.ngrok-free.app".to_string();
         let office_viewer_url = format!(
             "https://view.officeapps.live.com/op/view.aspx?src={}",

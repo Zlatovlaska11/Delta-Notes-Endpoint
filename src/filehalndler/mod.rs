@@ -3,30 +3,20 @@ pub mod file_serving;
 pub mod get_courses;
 mod test;
 
-use crate::filehalndler::get_courses::courses;
-
 pub mod handler {
-    use super::get_courses;
+    use std::u8;
 
-    pub fn get_file(req: tide::Request<()>) -> tide::Response {
-        let id = req
-            .param("id")
-            .expect("id is not included")
-            .to_string()
-            .parse::<u8>()
-            .unwrap_or_else(|_x| u8::MAX);
+    use serde_json::json;
 
+    use super::file_list::get_files::get_list;
+
+    pub fn course_list(id: u8) {
         if id == u8::MAX {
-            return tide::Response::new(tide::StatusCode::BadRequest);
+            todo!("return err");
         }
 
-        let filename = req
-            .param("filename")
-            .expect("id is not included")
-            .to_string();
+        let json_list = json!(get_list(id, None).unwrap());
 
-        let filepath = get_courses::courses::get_filepath(filename, id).unwrap();
-
-        tide::Response::new(200)
+        println!("{}", json_list);
     }
 }

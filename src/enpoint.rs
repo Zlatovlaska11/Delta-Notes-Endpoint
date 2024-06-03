@@ -1,14 +1,13 @@
 pub mod server {
 
-    use std::{fs::File, io::Read};
+    
 
     use tide::{
-        http::headers::HeaderValue, security::CorsMiddleware, Request, Response, StatusCode,
+        http::headers::HeaderValue, security::CorsMiddleware,
     };
 
     use crate::{
         auth, filehalndler::file_serving::file_serve::pptx_viewer,
-        filehalndler::file_serving::file_serve::serve_file,
     };
 
     pub async fn start_server(conn_str: String) -> shuttle_tide::ShuttleTide<()> {
@@ -47,43 +46,17 @@ pub mod server {
             async move { auth::auth::register(req, cnstr).await }
         };
 
+        let json_list = move |req: tide::Request<()>| {
+            
+            
+        };
+
         app.at("/auth/login").post(login);
         app.at("/auth/register").post(register);
 
-        app.at("file/:filename").get(serve_file);
         app.at("/pptx").get(pptx_viewer);
 
-        app.at("/fls/:filename").get(|req: Request<()>| async move {
-            // Extract filename from the request path
-            let filename: String = req.param("filename").unwrap_or_default().to_string();
-            let filename = urlencoding::decode(&filename).unwrap();
-            print!("{}", filename);
-
-            // Attempt to open the file
-            if let Ok(mut file) = File::open(&*filename) {
-                let mut contents = Vec::new();
-                // Read the file contents into a buffer
-                file.read_to_end(&mut contents)?;
-
-                // Set content type based on file extension
-                let content_type = match filename.split('.').last() {
-                    Some("pptx") => {
-                        "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                    }
-                    _ => "application/octet-stream", // fallback to binary data
-                };
-
-                // Return the file contents in the response body
-                let mut response = Response::new(StatusCode::Ok);
-                response.set_body(contents);
-                response.insert_header("Content-Type", content_type);
-
-                Ok(response)
-            } else {
-                // Return a 404 Not Found if the file does not exist
-                Ok(Response::new(StatusCode::NotFound))
-            }
-        });
+        //app.at("/list").post(ep);
 
         Ok(app.into())
     }
