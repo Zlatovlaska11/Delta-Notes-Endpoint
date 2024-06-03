@@ -1,14 +1,15 @@
 pub mod get_files {
 
-    use std::fs::{self};
+    use std::{borrow::Borrow, fs, path::Path};
 
     use crate::filehalndler::get_courses::courses::get_course_filepath;
     use serde::{self, Deserialize, Serialize};
 
     #[derive(Serialize, Deserialize, Debug, Clone)]
     pub struct CoureFile {
-        pub filename: String,
-        pub filepath: String,
+        pub decsription: String,
+        pub title: String,
+        pub url: String,
     }
 
     pub fn get_list(id: u8, filepath: Option<String>) -> Result<Vec<CoureFile>, std::io::Error> {
@@ -47,17 +48,49 @@ pub mod get_files {
                     .to_string()
                     .contains("ppt")
             {
+                let url = path
+                    .as_ref()
+                    .expect("json err")
+                    .path()
+                    .display()
+                    .to_string();
+
+                let desc = extract_last_two_segments(&url).unwrap();
+                let url = format!(
+                    "{}/{}/{}",
+                    "course",
+                    id,
+                    path.as_ref().unwrap().file_name().into_string().unwrap()
+                );
+
                 vec.push(CoureFile {
-                    filename: path.as_ref().unwrap().file_name().into_string().unwrap(),
-                    filepath: path
-                        .expect("error with the json")
-                        .path()
-                        .display()
-                        .to_string(),
+                    decsription: desc.clone(),
+                    title: path.as_ref().unwrap().file_name().into_string().unwrap(),
+                    url,
                 });
             }
         }
 
         Ok(vec)
+    }
+
+    fn extract_last_two_segments(path: &str) -> Option<String> {
+        // Create a Path object from the input string
+        let path = Path::new(path);
+
+        // Collect the components of the path into a vector
+        let components: Vec<&str> = path.iter().filter_map(|os_str| os_str.to_str()).collect();
+
+        // Ensure there are enough components to extract the desired segment
+        if components.len() < 2 {
+            return None;
+        }
+
+        // Get the second-to-last and last components
+        let second_to_last = components[components.len() - 2];
+        let last = components[components.len() - 1];
+
+        // Join the components into the desired path segment
+        Some(format!("{}/{}", second_to_last, last))
     }
 }
