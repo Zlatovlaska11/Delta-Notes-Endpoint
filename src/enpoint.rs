@@ -1,6 +1,7 @@
 pub mod server {
 
     use serde::{Deserialize, Serialize};
+    use serde_json::Value;
     use tide::{http::headers::HeaderValue, security::CorsMiddleware, Response};
 
     use crate::{
@@ -73,6 +74,7 @@ pub mod server {
 
         let json_list = move |mut req: tide::Request<()>| async move {
             let params: PostParams = req.body_json().await?;
+            // Access the parameters
 
             let json = course_list(params.id as u8);
 

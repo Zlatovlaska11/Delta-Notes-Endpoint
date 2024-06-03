@@ -12,21 +12,6 @@ pub mod file_serve {
         course_id: u8,
     }
 
-    pub async fn serve_file(req: Request<()>) -> tide::Result {
-        let filename: String = req.param("filename")?.to_string();
-        let id = req.param("id")?.parse::<u8>()?;
-        let file_path = get_filepath(filename, id)?;
-
-        let file_content = async_std::fs::read(file_path).await?;
-
-        let mut response = Response::new(StatusCode::Ok);
-        response.set_body(file_content);
-        response.insert_header(
-            "Content-Type",
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        );
-        Ok(response)
-    }
 
     pub async fn pptx_viewer(req: Request<()>) -> tide::Result {
         let params: PptxParams = req.query()?;
