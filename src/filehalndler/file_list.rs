@@ -7,7 +7,7 @@ pub mod get_files {
 
     #[derive(Serialize, Deserialize, Debug, Clone)]
     pub struct CoureFile {
-        pub decsription: String,
+        pub description: String,
         pub title: String,
         pub url: String,
     }
@@ -64,7 +64,7 @@ pub mod get_files {
                 );
 
                 vec.push(CoureFile {
-                    decsription: desc.clone(),
+                    description: desc.clone(),
                     title: path.as_ref().unwrap().file_name().into_string().unwrap(),
                     url,
                 });
