@@ -71,7 +71,7 @@ pub mod auth {
 
         let rows = client
             .query(
-                "INSERT INTO users (username, password, mail) VALUES ($1, $2, $3);",
+                "INSERT INTO users (username, password, email) VALUES ($1, $2, $3);",
                 &[
                     &creds.username.replace("\"", "'"),
                     &creds.password.replace("\"", "'"),
