@@ -88,7 +88,7 @@ pub mod server {
         };
 
         app.at("/auth/login").post(login);
-        app.at("/auth/register").post(register);
+        app.at("/auth/reg").post(register);
 
         app.at("/pptx").get(pptx_viewer);
 
