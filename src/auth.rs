@@ -3,15 +3,15 @@ pub mod auth {
     use core::panic;
 
     use serde::{Deserialize, Serialize};
-    use tokio_postgres::{Client, NoTls};
+    use tokio_postgres::{Client, GenericClient, NoTls};
 
-    #[derive(Deserialize, Serialize)]
+    #[derive(Deserialize, Serialize, Clone)]
     struct Creds {
         username: String,
         password: String,
     }
 
-    #[derive(Deserialize, Serialize)]
+    #[derive(Deserialize, Serialize, Clone)]
     pub struct CredsReg {
         username: String,
         password: String,
@@ -134,12 +134,24 @@ pub mod auth {
         mut req: tide::Request<()>,
         conn_str: String,
     ) -> tide::Result<tide::Response> {
-        let client = get_connection(conn_str).await;
+        let client = get_connection(conn_str.clone()).await;
 
         let creds: CredsReg = req
             .body_json()
             .await
             .expect("error reading or parsing body");
+
+        let creds_clone = creds.clone();
+        let check = client
+            .query(
+                "SELECT * FROM users WHERE username = $1",
+                &[&creds_clone.username],
+            )
+            .await;
+
+        if check.unwrap().len() != 0 {
+            return Ok(tide::Response::new(tide::StatusCode::Unauthorized));
+        }
 
         let rows = client
             .query(
