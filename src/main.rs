@@ -1,4 +1,3 @@
-use auth::auth::get_token;
 use dotenv::dotenv;
 
 pub mod auth;
@@ -12,4 +11,3 @@ async fn tide() -> shuttle_tide::ShuttleTide<()> {
     let conn_str = std::env::var("POSTGRES_URL").expect("no postgres url specified");
     enpoint::server::start_server(conn_str).await
 }
-
