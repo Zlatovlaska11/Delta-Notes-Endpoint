@@ -2,16 +2,11 @@ pub mod auth {
 
     use core::panic;
     use serde_json::Value;
-    use std::borrow::BorrowMut;
-    use surrealdb::{
-        engine::{any, remote::ws::Ws},
-        opt::auth::Root,
-        Surreal,
-    };
+
+    use surrealdb::{engine::remote::ws::Ws, opt::auth::Root, Surreal};
 
     use rocket::{form::validate::Len, http::Status};
     use serde::{Deserialize, Serialize};
-    use tokio_postgres::{Client, NoTls};
 
     #[derive(Deserialize, Serialize, Clone)]
     pub struct Creds {
@@ -19,7 +14,7 @@ pub mod auth {
         pub password: String,
     }
 
-    #[derive(Deserialize, Serialize, Clone)]
+    #[derive(Deserialize, Serialize, Clone, Debug)]
     pub struct CredsReg {
         pub username: String,
         pub password: String,
@@ -38,13 +33,14 @@ pub mod auth {
     ) -> surrealdb::Result<Surreal<surrealdb::engine::remote::ws::Client>> {
         // Create a connection string
 
-        let db = Surreal::new::<Ws>("127.0.0.1:6969").await?;
+        let db = Surreal::new::<Ws>("0.0.0.0:6969").await?;
         // Signin as a namespace, database, or root user
         db.signin(Root {
             username: "root",
             password: "root",
         })
         .await?;
+        db.use_ns("delta-notes").use_db("users").await?;
         Ok(db)
     }
 
@@ -113,29 +109,26 @@ pub mod auth {
     }
 
     pub async fn register(creds: CredsReg, conn_str: String) -> Status {
-        let client = get_connection(conn_str.clone()).await;
+        let client = get_connection(conn_str.clone()).await.unwrap();
 
         let creds_clone = creds.clone();
         let check = client
-            .query(
-                "SELECT * FROM users WHERE username = $1",
-                &[&creds_clone.username],
-            )
+            .query("SELECT * FROM users WHERE password = $1 and username = $2;")
+            .bind(&[&creds_clone.password, &creds_clone.username])
             .await;
-
-        if check.unwrap().len() != 0 {
+        println!("{:?}", check);
+        let check: Vec<CredsReg> = check.unwrap().take(0).unwrap();
+        if check.len() != 0 {
             return Status::Unauthorized;
         }
 
         let rows = client
-            .query(
-                "INSERT INTO users (username, password, email) VALUES ($1, $2, $3);",
-                &[
-                    &creds.username.replace("\"", "'"),
-                    &creds.password.replace("\"", "'"),
-                    &creds.mail.replace("\"", "'"),
-                ],
-            )
+            .query("INSERT INTO users (username, password, mail) VALUES ($1, $2, $3);")
+            .bind(&[
+                &creds.username.replace("\"", "'"),
+                &creds.password.replace("\"", "'"),
+                &creds.mail.replace("\"", "'"),
+            ])
             .await;
 
         match rows {

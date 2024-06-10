@@ -10,15 +10,11 @@ mod tests;
 #[rocket::main]
 async fn main() {
     let builder = Rocket::build()
+        .attach(server::CORS)
         .configure(rocket::Config::figment().merge(("port", 8080)))
         .mount(
             "/",
-            routes![
-                server_rocket::login_endpoint,
-                server_rocket::reg_endpoint,
-                server_rocket::get_pptx_link,
-                server_rocket::list
-            ],
+            routes![server_rocket::list, server_rocket::all_options, server_rocket::login_endpoint, server_rocket::reg_endpoint, server_rocket::get_pptx_link],
         )
         .launch()
         .await
