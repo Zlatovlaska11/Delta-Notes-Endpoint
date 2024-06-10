@@ -1,6 +1,6 @@
 pub mod get_files {
 
-    use std::{borrow::Borrow, fs, path::Path};
+    use std::{fs, path::Path};
 
     use crate::filehalndler::get_courses::courses::get_course_filepath;
     use serde::{self, Deserialize, Serialize};

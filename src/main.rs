@@ -1,11 +1,15 @@
+use auth::auth::get_token;
+use dotenv::dotenv;
+
 pub mod auth;
-pub mod database;
 pub mod enpoint;
 pub mod filehalndler;
+mod tests;
 
 #[shuttle_runtime::main]
-async fn tide(/*#[shuttle_shared_db::Postgres] conn_str: String*/) -> shuttle_tide::ShuttleTide<()>
-{
-    let conn_str = "postgresql://postgres:mysecretpassword@localhost:5433/postgres".to_string();
+async fn tide() -> shuttle_tide::ShuttleTide<()> {
+    dotenv().ok();
+    let conn_str = std::env::var("POSTGRES_URL").expect("no postgres url specified");
     enpoint::server::start_server(conn_str).await
 }
+

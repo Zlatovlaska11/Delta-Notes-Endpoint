@@ -1,3 +1,5 @@
-response=$(curl -s -X POST http://127.0.0.1:8080/list)
+sudo docker start minio
+sudo docker start postgres
+ngrok http --domain=pup-settled-dolphin.ngrok-free.app 9000
 
-echo "$response"
+

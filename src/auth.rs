@@ -1,7 +1,9 @@
 pub mod auth {
-    use crate::database::db_work::get_connection;
+
+    use core::panic;
 
     use serde::{Deserialize, Serialize};
+    use tokio_postgres::{Client, NoTls};
 
     #[derive(Deserialize, Serialize)]
     struct Creds {
@@ -10,10 +12,80 @@ pub mod auth {
     }
 
     #[derive(Deserialize, Serialize)]
-    struct CredsReg {
+    pub struct CredsReg {
         username: String,
         password: String,
         mail: String,
+    }
+
+    #[derive(Deserialize, Serialize, Debug)]
+    pub struct TokenClaims {
+        pub username: String,
+        pub mail: String,
+        pub exp: usize,
+    }
+
+    pub async fn get_connection(conn_str: String) -> Client {
+        // Create a connection string
+
+        // Parse the connection string
+        let (client, connection) = tokio_postgres::connect(&conn_str, NoTls).await.unwrap();
+
+        // Spawn a task to process the connection
+        tokio::spawn(async move {
+            if let Err(e) = connection.await {
+                eprintln!("connection error: {}", e);
+            }
+        });
+
+        client
+    }
+
+    pub async fn get_token(username: String, password: String, conn_str: String) -> String {
+        let exp = (chrono::Utc::now().naive_utc() + chrono::naive::Days::new(1))
+            .and_utc()
+            .timestamp() as usize;
+
+        let data = get_info(Creds { username, password }, conn_str).await;
+
+        let claims = TokenClaims {
+            username: data.username,
+            mail: data.mail,
+            exp,
+        };
+
+        let jwt = jsonwebtoken::encode(
+            &jsonwebtoken::Header::default(),
+            &claims,
+            &jsonwebtoken::EncodingKey::from_secret("test".as_bytes()),
+        )
+        .unwrap();
+
+        jwt
+    }
+
+    async fn get_info(lc: Creds, conn_str: String) -> CredsReg {
+        let client = get_connection(conn_str).await;
+
+        let res = client
+            .query(
+                "SELECT * FROM users WHERE username = $1 AND password = $2",
+                &[&lc.username, &lc.password],
+            )
+            .await
+            .unwrap();
+
+        if res.len() > 1 {
+            panic!("how that this happened");
+        }
+
+        let info: CredsReg = CredsReg {
+            username: res[0].get(0),
+            password: res[0].get(1),
+            mail: res[0].get(2),
+        };
+
+        info
     }
 
     pub async fn login(

@@ -1,7 +1,7 @@
 pub mod server {
 
     use serde::{Deserialize, Serialize};
-    use serde_json::Value;
+    
     use tide::{http::headers::HeaderValue, security::CorsMiddleware, Response};
 
     use crate::{

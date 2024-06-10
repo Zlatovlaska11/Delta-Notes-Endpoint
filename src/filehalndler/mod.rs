@@ -1,7 +1,6 @@
 pub mod file_list;
 pub mod file_serving;
 pub mod get_courses;
-mod test;
 
 pub mod handler {
     use std::u8;
