@@ -2,20 +2,21 @@ pub mod auth {
 
     use core::panic;
 
+    use rocket::http::Status;
     use serde::{Deserialize, Serialize};
-    use tokio_postgres::{Client, GenericClient, NoTls};
+    use tokio_postgres::{Client, NoTls};
 
     #[derive(Deserialize, Serialize, Clone)]
-    struct Creds {
-        username: String,
-        password: String,
+    pub struct Creds {
+        pub username: String,
+        pub password: String,
     }
 
     #[derive(Deserialize, Serialize, Clone)]
     pub struct CredsReg {
-        username: String,
-        password: String,
-        mail: String,
+        pub username: String,
+        pub password: String,
+        pub mail: String,
     }
 
     #[derive(Deserialize, Serialize, Debug)]
@@ -24,6 +25,7 @@ pub mod auth {
         pub mail: String,
         pub exp: usize,
     }
+
 
     pub async fn get_connection(conn_str: String) -> Client {
         // Create a connection string
@@ -88,14 +90,8 @@ pub mod auth {
         info
     }
 
-    pub async fn login(
-        mut req: tide::Request<()>,
-        conn_str: String,
-    ) -> tide::Result<tide::Response> {
-        let creds: Creds = req
-            .body_json()
-            .await
-            .expect("error reading or parsing body");
+    pub async fn login(creds: Creds, conn_str: String) -> Status {
+
         let client = get_connection(conn_str).await;
 
         let rows = client
@@ -110,36 +106,22 @@ pub mod auth {
 
         match rows {
             Ok(rows) => {
-                let mut response = tide::Response::new(tide::StatusCode::Ok);
-
                 if rows.len() == 1 {
-                    response.set_body("legit");
-
-                    Ok(response)
+                    Status::Ok
                 } else {
-                    let resp = tide::Response::new(tide::StatusCode::Unauthorized);
-                    Ok(resp.into())
+                    Status::Unauthorized
                 }
             }
-            Err(e) => {
-                let mut resp = tide::Response::new(tide::StatusCode::Unauthorized);
-                let _serialized = serde_json::to_string(&creds).unwrap();
-                resp.set_body(e.to_string());
-                Ok(resp.into())
-            }
+            Err(_) => Status::Unauthorized,
         }
     }
 
     pub async fn register(
-        mut req: tide::Request<()>,
+        creds: CredsReg,
         conn_str: String,
-    ) -> tide::Result<tide::Response> {
+    ) -> Status {
         let client = get_connection(conn_str.clone()).await;
 
-        let creds: CredsReg = req
-            .body_json()
-            .await
-            .expect("error reading or parsing body");
 
         let creds_clone = creds.clone();
         let check = client
@@ -150,7 +132,7 @@ pub mod auth {
             .await;
 
         if check.unwrap().len() != 0 {
-            return Ok(tide::Response::new(tide::StatusCode::Unauthorized));
+            return Status::Unauthorized
         }
 
         let rows = client
@@ -165,8 +147,8 @@ pub mod auth {
             .await;
 
         match rows {
-            Ok(_) => Ok(tide::Response::new(tide::StatusCode::Ok)),
-            Err(_) => Ok(tide::Response::new(tide::StatusCode::Unauthorized)),
+            Ok(_) => Status::Ok,
+            Err(_) => Status::Unauthorized,
         }
     }
 }
