@@ -1,4 +1,4 @@
-use rocket::{build, launch, routes, Rocket};
+use rocket::{routes, Rocket};
 use server::server_rocket;
 
 pub mod auth;
