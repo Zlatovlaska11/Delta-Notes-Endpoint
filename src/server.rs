@@ -1,9 +1,15 @@
 pub mod server_rocket {
 
-    use crate::auth::auth::login;
+    use std::{env};
+    use dotenv::dotenv;
+    use serde_json::Value;
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    use crate::auth::auth::{login, TokenClaims};
     use crate::auth::auth::{register, CredsReg};
     use crate::filehalndler::file_serving::file_serve::pptx_viewer;
     use crate::filehalndler::handler::course_list;
+    use jsonwebtoken::{decode, DecodingKey, Validation};
     use rocket::http::Status;
     use rocket::serde::json::Json;
     use rocket::{options, post, FromForm};
@@ -45,7 +51,7 @@ pub mod server_rocket {
     }
 
     #[post("/auth/login", data = "<creds>")]
-    pub async fn login_endpoint(creds: Json<Creds>) -> Result<Json<serde_json::Value>, Status>{
+    pub async fn login_endpoint(creds: Json<Creds>) -> Result<Json<serde_json::Value>, Status> {
         let creds_log: Creds = Creds {
             username: creds.username.to_string(),
             password: creds.password.to_string(),
@@ -95,7 +101,31 @@ pub mod server_rocket {
         return Ok(list);
     }
 
-    //#[post("/check", data = "<token>")]
+    #[post("/check", data = "<token>")]
+    pub async fn validate_token(token: Json<Value>) -> Status{
+
+        dotenv().ok(); // This line loads the environment variables from the ".env" file.
+        let key = env::var("SECRET").unwrap();
+        let validation = Validation::new(jsonwebtoken::Algorithm::HS256);
+        let token_data =
+            decode::<TokenClaims>(&token.to_string(), &DecodingKey::from_secret(key.as_ref()), &validation);
+
+        match token_data {
+            Ok(c) => {
+                // Check if the token has expired
+                let current_time = SystemTime::now()
+                    .duration_since(UNIX_EPOCH)
+                    .unwrap()
+                    .as_secs() as usize;
+                if c.claims.exp < current_time {
+                    Status::ImATeapot
+                } else {
+                    Status::Ok
+                }
+            }
+            Err(err) => Status::ImATeapot
+        }
+    }
 
     #[options("/<_..>")]
     pub fn all_options() {

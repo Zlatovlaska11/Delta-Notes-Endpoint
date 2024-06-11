@@ -1,7 +1,9 @@
 pub mod auth {
 
-    use core::panic;
+    
+    use dotenv::dotenv;
     use serde_json::{json, Value};
+    use std::env;
 
     use surrealdb::{engine::local::Db, Surreal};
 
@@ -47,32 +49,16 @@ pub mod auth {
             password,
             exp,
         };
-
+        dotenv().ok(); // This line loads the environment variables from the ".env" file.
+        let secret = env::var("SECRET").unwrap();
         let jwt = jsonwebtoken::encode(
             &jsonwebtoken::Header::default(),
             &claims,
-            &jsonwebtoken::EncodingKey::from_secret("test".as_bytes()),
+            &jsonwebtoken::EncodingKey::from_secret(secret.as_bytes()),
         )
         .unwrap();
 
         jwt
-    }
-
-    async fn get_info(lc: Creds) -> CredsReg {
-        let client = get_connection().await.unwrap();
-
-        let mut res = client
-            .query("SELECT * FROM users WHERE username = $username AND password = $password;")
-            .bind((("username", lc.username), ("password", lc.password)))
-            .await
-            .unwrap();
-
-        let resp: Vec<CredsReg> = res.take(0).unwrap();
-        if resp.len() > 1 {
-            panic!("how that this happened");
-        }
-
-        resp[0].clone()
     }
 
     pub async fn login(creds: Creds) -> Result<Json<Value>, Status> {
