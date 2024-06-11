@@ -95,6 +95,8 @@ pub mod server_rocket {
         return Ok(list);
     }
 
+    //#[post("/check", data = "<token>")]
+
     #[options("/<_..>")]
     pub fn all_options() {
         /* Intentionally left empty */
