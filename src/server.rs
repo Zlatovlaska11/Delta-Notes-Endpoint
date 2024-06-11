@@ -1,5 +1,3 @@
-use rocket::{routes, Rocket};
-
 pub mod server_rocket {
 
     use crate::auth::auth::login;
@@ -8,7 +6,7 @@ pub mod server_rocket {
     use crate::filehalndler::handler::course_list;
     use rocket::http::Status;
     use rocket::serde::json::Json;
-    use rocket::{launch, options, post, routes, FromForm, Rocket};
+    use rocket::{options, post, FromForm};
     use serde::{Deserialize, Serialize};
 
     use crate::auth::auth::Creds;
@@ -47,41 +45,40 @@ pub mod server_rocket {
     }
 
     #[post("/auth/login", data = "<creds>")]
-    pub async fn login_endpoint(creds: Json<Creds>) -> Status {
-        let conn_str = std::env::var("POSTGRES_URL").expect("no postgres url specified");
-
+    pub async fn login_endpoint(creds: Json<Creds>) -> Result<Json<serde_json::Value>, Status>{
         let creds_log: Creds = Creds {
             username: creds.username.to_string(),
             password: creds.password.to_string(),
         };
 
-        let status = login(creds_log, conn_str.to_string()).await;
+        let status = login(creds_log).await;
 
-        status
+        match status {
+            Ok(token) => Ok(token),
+            Err(stat) => Err(stat),
+        }
     }
 
     #[post("/auth/reg", data = "<creds>")]
     pub async fn reg_endpoint(creds: Json<CredsReg>) -> Status {
-        let conn_str = std::env::var("POSTGRES_URL").expect("no postgres url specified");
-
         let creds_log: CredsReg = CredsReg {
             username: creds.username.to_string(),
             password: creds.password.to_string(),
             mail: creds.mail.to_string(),
         };
 
-        let status = register(creds_log, conn_str.to_string()).await;
+        let status = register(creds_log).await;
 
         status
     }
 
     #[post("/list", data = "<id>")]
-    pub fn list<'a>(id: Json<PostParams>) -> Json<String> {
+    pub fn list<'a>(id: Json<PostParams>) -> Json<serde_json::Value> {
         let id = id.id as u8;
 
         let list = course_list(id);
 
-        Json(list.to_string())
+        Json(list)
     }
 
     #[post("/pptx", data = "<data>")]

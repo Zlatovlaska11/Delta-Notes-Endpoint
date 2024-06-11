@@ -1,11 +1,11 @@
 pub mod auth {
 
     use core::panic;
-    use serde_json::Value;
+    use serde_json::{json, Value};
 
-    use surrealdb::{engine::remote::ws::Ws, opt::auth::Root, Surreal};
+    use surrealdb::{engine::local::Db, Surreal};
 
-    use rocket::{form::validate::Len, http::Status};
+    use rocket::{form::validate::Len, http::Status, serde::json::Json};
     use serde::{Deserialize, Serialize};
 
     #[derive(Deserialize, Serialize, Clone)]
@@ -24,36 +24,27 @@ pub mod auth {
     #[derive(Deserialize, Serialize, Debug)]
     pub struct TokenClaims {
         pub username: String,
-        pub mail: String,
+        pub password: String,
         pub exp: usize,
     }
 
-    pub async fn get_connection(
-        conn_str: String,
-    ) -> surrealdb::Result<Surreal<surrealdb::engine::remote::ws::Client>> {
+    pub async fn get_connection() -> surrealdb::Result<Surreal<Db>> {
         // Create a connection string
 
-        let db = Surreal::new::<Ws>("0.0.0.0:6969").await?;
-        // Signin as a namespace, database, or root user
-        db.signin(Root {
-            username: "root",
-            password: "root",
-        })
-        .await?;
-        db.use_ns("delta-notes").use_db("users").await?;
+        // Create database connection
+        let db = Surreal::new::<surrealdb::engine::local::RocksDb>("./local.db").await?; // Signin as a namespace, database, or root user
+        db.use_ns("delta-notes-db").use_db("users").await?;
         Ok(db)
     }
 
-    pub async fn get_token(username: String, password: String, conn_str: String) -> String {
+    pub async fn get_token(username: String, password: String) -> String {
         let exp = (chrono::Utc::now().naive_utc() + chrono::naive::Days::new(1))
             .and_utc()
             .timestamp() as usize;
 
-        let data = get_info(Creds { username, password }, conn_str).await;
-
         let claims = TokenClaims {
-            username: data.username,
-            mail: data.mail,
+            username,
+            password,
             exp,
         };
 
@@ -67,11 +58,11 @@ pub mod auth {
         jwt
     }
 
-    async fn get_info(lc: Creds, conn_str: String) -> CredsReg {
-        let client = get_connection(conn_str).await.unwrap();
+    async fn get_info(lc: Creds) -> CredsReg {
+        let client = get_connection().await.unwrap();
 
         let mut res = client
-            .query("SELECT * FROM users WHERE username = $username AND password = $password")
+            .query("SELECT * FROM users WHERE username = $username AND password = $password;")
             .bind((("username", lc.username), ("password", lc.password)))
             .await
             .unwrap();
@@ -84,41 +75,43 @@ pub mod auth {
         resp[0].clone()
     }
 
-    pub async fn login(creds: Creds, conn_str: String) -> Status {
-        let client = get_connection(conn_str).await.unwrap();
+    pub async fn login(creds: Creds) -> Result<Json<Value>, Status> {
+        let client = get_connection().await.unwrap();
 
-        let rows = client
-            .query("SELECT * FROM users WHERE password = $1 and username = $2;")
-            .bind(&[
-                &creds.password.replace("\"", "'"),
-                &creds.username.replace("\"", "'"),
-            ])
-            .await;
+        let sql = format!(
+            "SELECT * FROM users WHERE username = '{}' and password = '{}';",
+            creds.username, creds.password
+        );
+        println!("{}", sql.clone());
+        let rows = client.query(sql).await;
+        dbg!(rows.as_ref().unwrap());
+        let token = get_token(creds.username, creds.password).await;
 
         match rows {
             Ok(mut rows) => {
                 let rows: Vec<Value> = rows.take(0).unwrap();
                 if rows.len() == 1 {
-                    Status::Ok
+                    Ok(Json(json!(token)))
                 } else {
-                    Status::Unauthorized
+                    Err(Status::Unauthorized)
                 }
             }
-            Err(_) => Status::Unauthorized,
+            Err(_) => Err(Status::Unauthorized),
         }
     }
 
-    pub async fn register(creds: CredsReg, conn_str: String) -> Status {
-        let client = get_connection(conn_str.clone()).await.unwrap();
+    pub async fn register(creds: CredsReg) -> Status {
+        let client = get_connection().await.unwrap();
 
         let creds_clone = creds.clone();
-        let check = client
-            .query("SELECT * FROM users WHERE password = $1 and username = $2;")
-            .bind(&[&creds_clone.password, &creds_clone.username])
-            .await;
+        let sql = format!(
+            "SELECT * FROM users WHERE username = '{}' and password = '{}';",
+            creds_clone.username, creds_clone.password
+        );
+        let check = client.query(sql).await;
         println!("{:?}", check);
         let check: Vec<CredsReg> = check.unwrap().take(0).unwrap();
-        if check.len() != 0 {
+        if check.len() > 0 {
             return Status::Unauthorized;
         }
 
