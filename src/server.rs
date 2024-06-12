@@ -1,8 +1,10 @@
 pub mod server_rocket {
 
-    use std::{env};
+    use core::fmt;
     use dotenv::dotenv;
+    use rocket::http::uri::Query;
     use serde_json::Value;
+    use std::env;
     use std::time::{SystemTime, UNIX_EPOCH};
 
     use crate::auth::auth::{login, TokenClaims};
@@ -22,6 +24,11 @@ pub mod server_rocket {
         #[serde(with = "string_or_u32")]
         pub id: u32,
         // Add more fields as needed
+    }
+
+    #[derive(Debug, Deserialize, Serialize, FromForm)]
+    pub struct Token {
+        token: String,
     }
 
     #[derive(Debug, Deserialize, FromForm, Clone)]
@@ -87,12 +94,12 @@ pub mod server_rocket {
         Json(list)
     }
 
-    #[post("/pptx", data = "<data>")]
-    pub async fn get_pptx_link(data: Json<PptxParams>) -> Result<Json<String>, Status> {
-        let data = data.clone();
+    use rocket::get;
+    #[get("/pptx?<id>&<filename>")]
+    pub async fn get_pptx_link(id: u8, filename: String) -> Result<Json<String>, Status> {
         let params = PptxParams {
-            filename: data.filename.clone(),
-            id: data.id,
+            filename,
+            id,
         };
         let Ok(list) = pptx_viewer(params).await else {
             return Err(Status::Unauthorized);
@@ -102,13 +109,17 @@ pub mod server_rocket {
     }
 
     #[post("/check", data = "<token>")]
-    pub async fn validate_token(token: Json<Value>) -> Status{
-
-        dotenv().ok(); // This line loads the environment variables from the ".env" file.
+    pub async fn validate_token(token: Json<Token>) -> (Status, Json<Value>) {
+        dotenv().ok();
         let key = env::var("SECRET").unwrap();
+
+        println!("{}", token.token);
         let validation = Validation::new(jsonwebtoken::Algorithm::HS256);
-        let token_data =
-            decode::<TokenClaims>(&token.to_string(), &DecodingKey::from_secret(key.as_ref()), &validation);
+        let token_data = decode::<TokenClaims>(
+            &token.token,
+            &DecodingKey::from_secret(key.as_ref()),
+            &validation,
+        );
 
         match token_data {
             Ok(c) => {
@@ -118,12 +129,12 @@ pub mod server_rocket {
                     .unwrap()
                     .as_secs() as usize;
                 if c.claims.exp < current_time {
-                    Status::ImATeapot
+                    (Status::ImATeapot, Json(serde_json::json!("expired")))
                 } else {
-                    Status::Ok
+                    (Status::Ok, Json(serde_json::json!("ok")))
                 }
             }
-            Err(err) => Status::ImATeapot
+            Err(err) => (Status::ImATeapot, Json(serde_json::json!(err.to_string()))),
         }
     }
 
