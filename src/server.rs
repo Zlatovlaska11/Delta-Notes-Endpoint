@@ -97,10 +97,7 @@ pub mod server_rocket {
     use rocket::get;
     #[get("/pptx?<id>&<filename>")]
     pub async fn get_pptx_link(id: u8, filename: String) -> Result<Json<String>, Status> {
-        let params = PptxParams {
-            filename,
-            id,
-        };
+        let params = PptxParams { filename, id };
         let Ok(list) = pptx_viewer(params).await else {
             return Err(Status::Unauthorized);
         };

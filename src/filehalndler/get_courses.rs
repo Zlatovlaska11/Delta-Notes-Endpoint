@@ -5,12 +5,13 @@ pub mod courses {
     };
 
     pub fn get_course_filepath(id: u8) -> Result<String, Error> {
-        let dirs: [String; 5] = [
+        let dirs: [String; 6] = [
             "public/files/Český jazyk a literatura 1.A (2023⧸24)".to_string(),
             "public/files/Přírodní vědy 1.A, 1.B (Eko, Bi, Ch) (2023⧸24)".to_string(),
             "public/files/Výpočetní technika 1".to_string(),
             "public/files/Počítačové systémy a sítě 1.A (Drvota, 2023⧸24)".to_string(),
             "public/files/Fyzika 1.ročník (2023⧸24)".to_string(),
+            "public/files/Dějepis 1 - DES (2023⧸24, Binarová)/".to_string(),
         ];
 
         if dirs.len() < id as usize {

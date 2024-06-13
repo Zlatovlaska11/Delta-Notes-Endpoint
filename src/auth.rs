@@ -1,14 +1,12 @@
 pub mod auth {
 
-    
-    use dotenv::dotenv;
-    use serde_json::{json, Value};
+    use core::panic;
     use std::env;
 
-    use surrealdb::{engine::local::Db, Surreal};
-
-    use rocket::{form::validate::Len, http::Status, serde::json::Json};
+    use rocket::{http::Status, serde::json::Json};
     use serde::{Deserialize, Serialize};
+    use serde_json::{json, Value};
+    use tokio_postgres::{Client, NoTls};
 
     #[derive(Deserialize, Serialize, Clone)]
     pub struct Creds {
@@ -16,7 +14,7 @@ pub mod auth {
         pub password: String,
     }
 
-    #[derive(Deserialize, Serialize, Clone, Debug)]
+    #[derive(Deserialize, Serialize, Clone)]
     pub struct CredsReg {
         pub username: String,
         pub password: String,
@@ -30,13 +28,26 @@ pub mod auth {
         pub exp: usize,
     }
 
-    pub async fn get_connection() -> surrealdb::Result<Surreal<Db>> {
+    use dotenv::dotenv;
+    pub async fn get_connection() -> Client {
         // Create a connection string
 
-        // Create database connection
-        let db = Surreal::new::<surrealdb::engine::local::RocksDb>("./local.db").await?; // Signin as a namespace, database, or root user
-        db.use_ns("delta-notes-db").use_db("users").await?;
-        Ok(db)
+        // Parse the connection string
+        let (client, connection) = tokio_postgres::connect(
+            &"postgresql://postgres:mysecretpassword@localhost:5433/postgres",
+            NoTls,
+        )
+        .await
+        .unwrap();
+
+        // Spawn a task to process the connection
+        tokio::spawn(async move {
+            if let Err(e) = connection.await {
+                eprintln!("connection error: {}", e);
+            }
+        });
+
+        client
     }
 
     pub async fn get_token(username: String, password: String) -> String {
@@ -61,21 +72,47 @@ pub mod auth {
         jwt
     }
 
-    pub async fn login(creds: Creds) -> Result<Json<Value>, Status> {
-        let client = get_connection().await.unwrap();
+    async fn get_info(lc: Creds) -> CredsReg {
+        let client = get_connection().await;
 
-        let sql = format!(
-            "SELECT * FROM users WHERE username = '{}' and password = '{}';",
-            creds.username, creds.password
-        );
-        println!("{}", sql.clone());
-        let rows = client.query(sql).await;
-        dbg!(rows.as_ref().unwrap());
-        let token = get_token(creds.username, creds.password).await;
+        let res = client
+            .query(
+                "SELECT * FROM users WHERE username = $1 AND password = $2",
+                &[&lc.username, &lc.password],
+            )
+            .await
+            .unwrap();
+
+        if res.len() > 1 {
+            panic!("how that this happened");
+        }
+
+        let info: CredsReg = CredsReg {
+            username: res[0].get(0),
+            password: res[0].get(1),
+            mail: res[0].get(2),
+        };
+
+        info
+    }
+
+    pub async fn login(creds: Creds) -> Result<Json<Value>, Status> {
+        let client = get_connection().await;
+
+        let token = get_token(creds.username.clone(), creds.password.clone()).await;
+
+        let rows = client
+            .query(
+                "SELECT * FROM users WHERE password = $1 and username = $2;",
+                &[
+                    &creds.password.replace("\"", "'"),
+                    &creds.username.replace("\"", "'"),
+                ],
+            )
+            .await;
 
         match rows {
-            Ok(mut rows) => {
-                let rows: Vec<Value> = rows.take(0).unwrap();
+            Ok(rows) => {
                 if rows.len() == 1 {
                     Ok(Json(json!(token)))
                 } else {
@@ -87,27 +124,29 @@ pub mod auth {
     }
 
     pub async fn register(creds: CredsReg) -> Status {
-        let client = get_connection().await.unwrap();
+        let client = get_connection().await;
 
         let creds_clone = creds.clone();
-        let sql = format!(
-            "SELECT * FROM users WHERE username = '{}' and password = '{}';",
-            creds_clone.username, creds_clone.password
-        );
-        let check = client.query(sql).await;
-        println!("{:?}", check);
-        let check: Vec<CredsReg> = check.unwrap().take(0).unwrap();
-        if check.len() > 0 {
+        let check = client
+            .query(
+                "SELECT * FROM users WHERE username = $1",
+                &[&creds_clone.username],
+            )
+            .await;
+
+        if check.unwrap().len() != 0 {
             return Status::Unauthorized;
         }
 
         let rows = client
-            .query("INSERT INTO users (username, password, mail) VALUES ($1, $2, $3);")
-            .bind(&[
-                &creds.username.replace("\"", "'"),
-                &creds.password.replace("\"", "'"),
-                &creds.mail.replace("\"", "'"),
-            ])
+            .query(
+                "INSERT INTO users (username, password, email) VALUES ($1, $2, $3);",
+                &[
+                    &creds.username.replace("\"", "'"),
+                    &creds.password.replace("\"", "'"),
+                    &creds.mail.replace("\"", "'"),
+                ],
+            )
             .await;
 
         match rows {

@@ -47,6 +47,13 @@ pub mod get_files {
                     .display()
                     .to_string()
                     .contains("ppt")
+                || path
+                    .as_ref()
+                    .unwrap()
+                    .path()
+                    .display()
+                    .to_string()
+                    .contains("pdf")
             {
                 let url = path
                     .as_ref()
