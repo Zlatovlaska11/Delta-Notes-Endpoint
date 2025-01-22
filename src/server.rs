@@ -4,7 +4,7 @@ pub mod server_rocket {
     use dotenv::dotenv;
     use rocket::http::uri::Query;
     use serde_json::Value;
-    use std::env;
+    use std::{env, fs};
     use std::time::{SystemTime, UNIX_EPOCH};
 
     use crate::auth::auth::{login, TokenClaims};
@@ -89,9 +89,11 @@ pub mod server_rocket {
     pub fn list<'a>(id: Json<PostParams>) -> Json<serde_json::Value> {
         let id = id.id as u8;
 
+        // this is only for web preview
         let list = course_list(id);
 
         Json(list)
+
     }
 
     use rocket::get;

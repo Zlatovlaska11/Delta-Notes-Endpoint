@@ -3,6 +3,7 @@ pub mod get_files {
     use std::{fs, path::Path};
 
     use crate::filehalndler::get_courses::courses::get_course_filepath;
+    use rocket::serde::json::Json;
     use serde::{self, Deserialize, Serialize};
 
     #[derive(Serialize, Deserialize, Debug, Clone)]
