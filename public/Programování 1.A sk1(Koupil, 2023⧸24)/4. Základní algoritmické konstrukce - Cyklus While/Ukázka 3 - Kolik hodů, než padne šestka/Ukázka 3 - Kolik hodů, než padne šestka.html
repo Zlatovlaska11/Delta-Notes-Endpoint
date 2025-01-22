@@ -1,0 +1,29 @@
+<pre><code>
+        static void Main(string[] args)
+        {
+            //program spočítá, kolikrát musel hodit kostkou, než padla šestka
+
+            Random rnd = new Random();
+
+            int i = 0;
+            while (i++ &lt; 20)
+            {
+
+                int hod = 0;
+                int pocet = 0;
+
+                //zjistím, jestli padla šestka
+                //pokud ano, skončím, jinak se vrátím
+                while (hod != 6)
+                {
+                    //hodím kostkou
+                    hod = rnd.Next(1, 7);
+                    //zvýším počítadlo
+                    pocet++;
+                }
+
+                Console.WriteLine("Musel jsem hodit {0} krát.", pocet);
+            }
+            Console.ReadKey();
+        }
+</code></pre>

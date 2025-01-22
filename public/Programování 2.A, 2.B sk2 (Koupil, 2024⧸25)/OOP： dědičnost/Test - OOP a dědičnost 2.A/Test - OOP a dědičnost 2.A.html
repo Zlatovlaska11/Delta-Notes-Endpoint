@@ -1,0 +1,71 @@
+<p dir="ltr" style="text-align: left;"></p><div id="copy-button"><a href="https://markdownlivepreview.com/#"></a></div>
+            <header><div id="github"></div></header><div id="edit"><div id="editor-wrapper"><div id="editor"><div><div></div><div></div></div></div>
+            </div>
+        </div>
+        <div id="preview">
+            <div id="preview-wrapper">
+                <div id="output"><h1></h1><div id="preview">
+            <div id="preview-wrapper">
+                <div id="output"><h1>Zaměstnanci</h1>
+<p>V této úloze budete vytvářet několik tříd a interface. Je možné pracovat ve Visual Studiu a výsledný kód jen přesunout sem.</p>
+<p><a href="https://student.delta-studenti.cz/webservice/pluginfile.php/85095/mod_page/content/5/main.cs.txt?time=1734368042146">Začněte s předpřipraveným kódem&nbsp;</a></p><p>Předpřipravenou statickou metodu <code>Test()</code> a metodu <code>Main</code>
+ ponechte úplně nahoře. Test neměňte, main si můžete přirozeně upravit /
+ rozšířit dle vlastních potřeb, abyste zkoušeli vše, co potřebujete</p>
+<p>Připravte projekt s těmito objekty:</p>
+<h3>Enumerace <code>Pohlavi</code></h3>
+<ul>
+<li>Má dvě hodnoty: <code>Muz</code>, <code>Zena</code> (Pokud to cítíte jinak, přidejte klidně i další...)</li>
+</ul>
+<h3>Třída <code>Clovek</code></h3>
+<ul>
+<li>Má vlastnosti <code>Jmeno</code> (řetězec) a <code>Pohlavi</code> (enumerace viz výše) které lze veřejně číst a dědící třídy je mohou nastavit, celý svět ne</li>
+<li>Vlastnosti <code>Jmeno</code> a <code>Pohlavi</code> přijme <strong>konstruktor</strong> jako parametry a nastaví</li>
+<li>Přepisuje bázovou metodu <code>ToString()</code> tak, že vypíše něco jako <code>"Jmenuji se Alena a jsem žena"</code> (samozřejmě podle hodnot uložených v objektu)</li>
+</ul>
+<h3>Abstraktní třída <code>Zamestnanec</code></h3>
+<ul>
+<li>Rozšiřuje třídu <code>Clovek</code></li>
+<li>Obsahuje veřejné vlastnosti <code>Mzda</code> (celé číslo) a <code>Povolani</code> (řetězec)<ul>
+<li>veřejně je lze číst</li>
+<li>dědící třídy je mohou nastavit, celý svět ne</li>
+</ul>
+</li>
+<li>Její konstruktor přijímá kromě jména a pohlaví také mzdu a povolání. Pak volá bázový konstruktor a mzdu a povolání ukládá přímo.</li>
+<li>Předepisuje dědícím třídám existenci metody <code>Pracuj()</code>, která vrací řetězec. <strong>Třída</strong> <code>Zamestnanec</code> <strong>ji</strong> ale <strong>neimplementuje</strong>.</li>
+</ul>
+<h3>Uzavřená třída Ucetni</h3>
+<ul>
+<li>Je rozšiřující třídou <code>Zamestnanec</code> a implementuje vše potřebné z bázových tříd</li>
+<li>Konstruktor přijímá parametry <code>jmeno</code>, <code>pohlavi</code> a <code>mzda</code> a volá bázový konstruktor. Jako název povolání uloží řetězec <code>"účetní"</code></li>
+<li>Pokud se pracuje (tedy když se zavolá metoda <code>Pracuj()</code>), vrací metoda řetězec <code>"Kontroluji faktury"</code>.</li>
+</ul>
+<h3>Uzavřená třída Kuchar</h3>
+<ul>
+<li>Je rozšiřující třídou <code>Zamestnanec</code> a implementuje vše potřebné z bázových tříd</li>
+<li>Konstruktor přijímá parametry <code>jmeno</code>, <code>pohlavi</code>, <code>mzda</code> a <code>hotel</code> (řetězec). </li>
+<li>Parametry, které lze, uloží pomocí bázového konstruktoru. Jako název povolání uloží řetězec <code>"kuchař"</code></li>
+<li>Hotel si uloží jako soukromou datovou položku přímo ve třídě</li>
+<li>Pokud se pracuje (tedy když se zavolá metoda <code>Pracuj()</code>), vrací metoda řetězec <code>"Klepu řízky v hotelu …"</code>.</li>
+</ul>
+<h3>Třída Skupina</h3>
+<ul>
+<li>Má soukromou položku <code>_zamestnanci</code>: pole/list objektů třídy <code>Zamestnanec</code></li>
+<li>Má veřejnou metodu <code>DoPrace()</code>, která nejprve vypíše <code>"Pracuje N zaměstanců"</code> (kde <code>N</code> je počet prvků kolekce <code>_zamestnanci</code>)
+ a pak postupně nechá pracovat všechny zaměstnance věcí z pole výše a 
+vypíše, kdo a jak pracuje (=návratovou hodnotu metod) do konzole. Metoda
+ nic nevrací. Ukázka je připravená v <code>main.cs</code></li>
+<li>Má veřejnou read-only vlastnost <code>Popis</code>, která vrací popis podle šablony <code>"Skupina 3 mužů a 5 žen"</code> (podle dat uložených v jednotlivých objektech)</li>
+<li>Má veřejnou read-only vlastnost <code>PrumernaMzda</code>, která vrací průměrnou mzdu všech zaměstnanců ve skupině</li>
+<li>V konstruktoru přijímá pole zaměstnanců a nakopíruje si ho (viz první bod třídy <code>Skupina</code>).</li>
+</ul>
+<p>V hlavním programu vytvořte skupinu dvou účetních a tří kuchařů, pak 
+vyzkoušejte použít metody a vlastnosti skupiny. Kód k tomu vhodný tam už
+ částečně je, může ale obsahovat občas někde nějakou syntaktickou chybu,
+ nebyl vykonán v prostředí, jde o jeho smysl.</p>
+</div>
+            </div>
+        </div><ul><li></li>
+</ul>
+</div>
+            </div>
+        </div><p></p>

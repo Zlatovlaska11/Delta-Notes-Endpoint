@@ -1,5 +1,4 @@
 # ignore ALL files in ANY directory named temp
-public/ 
 target/
 local.db/
 

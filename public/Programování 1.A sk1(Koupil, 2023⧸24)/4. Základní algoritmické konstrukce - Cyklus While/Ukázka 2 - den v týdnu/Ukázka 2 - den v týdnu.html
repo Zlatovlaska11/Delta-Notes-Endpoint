@@ -1,0 +1,89 @@
+<pre><code>
+
+        static void Main(string[] args)
+
+        {
+
+            //chci, aby uživatel zadal číslo mezi 1 a 7 včetně, jinak se ho zeptám znovu
+
+            string vstup;
+
+            Console.Write("Zadej číslo mezi 1 a 7: ");
+
+            vstup = Console.ReadLine();
+
+            int cislo = int.Parse(vstup);
+
+
+
+            while (cislo &lt; 1 || cislo &gt; 7)
+
+            {
+
+                Console.Write("Chybné zadání. Zadej číslo mezi 1 a 7: ");
+
+                vstup = Console.ReadLine();
+
+                cislo = int.Parse(vstup);
+
+            }
+
+
+
+            string den = "";
+
+            switch (cislo)
+
+            {
+
+                case 1:
+
+                    den = "Pondělí";
+
+                    break;
+
+                case 2:
+
+                    den = "Úterý";
+
+                    break;
+
+                case 3:
+
+                    den = "Středa";
+
+                    break;
+
+                case 4:
+
+                    den = "Čtvrtek";
+
+                    break;
+
+                case 5:
+
+                    den = "Pátek";
+
+                    break;
+
+                case 6:
+
+                    den = "Sobota";
+
+                    break;
+
+                case 7:
+
+                    den = "Neděle";
+
+                    break;
+
+            }
+
+            Console.WriteLine("Číslu {0} odpovídá den {1}", cislo, den);
+
+            Console.ReadKey();
+
+        }
+
+</code></pre>

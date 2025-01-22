@@ -1,0 +1,33 @@
+<pre><code>
+       static void Main(string[] args)
+        {
+            //program bude sčítat čísla, která mu zadáme.
+            //pokud zadáme "Konec", ukončí sčítání
+            //pokud zadáme neplatný vstup, vyzve k opravě
+
+            double soucet = 0;
+            double cislo;
+
+            Console.Write("Zadej číslo, nebo napiš 'konec': "); //výzva a načtenáí musí přijít před cyklem while
+            string vstup = Console.ReadLine();
+
+            while (vstup != "konec" ) {
+                if (double.TryParse(vstup, out cislo)) 
+                {
+                    //parsování se povedlo, číslo si přičtu
+                    soucet += cislo; 
+                }
+                else
+                {
+                    //parsování se nepovedlo, vyzvu k opravě
+                    Console.WriteLine("Neplatný vstup, zadej číslo, nebo \"konec\".");
+                }
+
+                Console.Write("Zadej číslo, nebo napiš 'konec': "); //a výzva + načtení pro příští "kolo" cyklu
+                vstup = Console.ReadLine();
+            }
+
+            Console.WriteLine("Součet všech zadaných čísel je {0}.", soucet);
+            Console.ReadKey();
+        }
+</code></pre>

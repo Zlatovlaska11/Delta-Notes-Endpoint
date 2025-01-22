@@ -1,0 +1,80 @@
+<h1>Úvod do předmětu</h1>
+<h2>Informace</h2>
+<p><span style="font-weight: bold;"></span>Zpráva, kterou je možné předávat. Je to předávaný údaj či poznatek o věcech, veličinách nebo událostech, které nastaly, trvají nebo nastanou.</p>
+<p>Hodnota informace je rozdíl mezi stavem "vědění" před tím, než jsme informaci obdrželi a stavem po obdržení informace.</p>
+<p><img src="https://student.delta-studenti.cz/webservice/pluginfile.php/82615/mod_page/content/6/download.png" alt="" role="presentation">Obr.1</p>
+<h3>Data</h3>
+<p>Data představují "to, z čeho informaci získáváme".</p>
+<p>Důležité zásady pro práci s daty:</p>
+<ul>
+  <li>správnost</li>
+  <li>komplexnost</li>
+  <li>stručnost</li>
+</ul>
+<p>Kvalitu dat pak určuje: </p>
+<ul>
+  <li>správnost:</li>
+  <ul>
+    <li>data by měla být bezchybná</li>
+    <li>aktuálnost: data by neměla být zastaralá</li>
+    <li>přesnost: ne "Klára je velká." ale "Klára měří 185 cm."</li>
+  </ul>
+  <li>komplexnost: data by měla být celistvá</li>
+  <li>dostupnost: jen daným osobám, která mají oprávnění</li>
+</ul>
+<p>(zdroj: měl by být uveden zdroj, odkud jste čerpali)</p>Nesprávná data jsou:
+<ul>
+  <li>zastaralá</li>
+  <li>chybná</li>
+  <ul>
+    <li>došlo k chybě při zpracování, manipulaci, komunikaci</li>
+    <li>došlo k záměrné chybě - dezinformaci (nadhodnocení, podhodnocení,..)</li>
+  </ul>
+</ul>Způsoby ukládání dat:
+<ul>
+  <li>mozek: vědomé, úmyslné, cílené ukládání znalostí</li>
+  <li>knihy (papír)</li>
+  <li>software: úmyslný vývoj, ukládání, přenos a využití znalostí</li>
+</ul>Operace s daty:
+<ul>
+  <li>sběr a ukládání</li>
+  <li>uchovávání a údržba, jejich aktualizace</li>
+  <li>doplňování dat</li>
+  <li>zpracovávání dat</li>
+  <li>distribuce a využívání dat</li>
+</ul>
+<h2>Databáze</h2>Jednoduše lze říci, že databáze je báze dat. Je to soubor informací, skládajících se ze 4 komponentů:<br>
+<ul>
+  <li>datové prvky </li>
+  <li>vztahy mezi prvky</li>
+  <li>integritní omezení</li>
+  <li>schéma databáze</li>
+</ul>
+<h3>Databázové modely</h3>
+<p>Máme 4 typy:<br><br></p>
+<h4>1. Hierarchický model</h4>
+<p>Organizovaný ve stromové struktuře.<br>Založen na terminologii <span style="font-weight: bold;">rodič – potomek</span> (předek potomek).</p><img title="hier" style="width: 310px; height: 177px;" alt="hier" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82615/mod_page/content/6/uvodni_hodina/hier.png" border="0" hspace="0">Obr.2<br>
+<h4>2. Síťový model</h4>
+<p>Je zobecněním modelu hierarchického.</p>
+<p>Struktura síťové databáze je vyjádřena pomocí uzlů (někdy také označovaných jako záznamy) a množinových struktur. </p>
+<p>Tento model využívá tzv. OLAP technologie. Využívá se například u datových skladů pro tzv. "dolování dat" (Data Mining viz. 18 přednáška). Používá se především tehdy, když potřebujeme rychlou odezvu na dotazy na statistická agregovaná data pro různé skupiny prvků. (Příklad: Kolik pojistných smluv se uzavřelo za poslední rok a na jakou celkovou částku. Výsledek chci zpracovat po měsících pro různé druhy pojištění.)</p>
+<p><img title="sit" style="width: 263px; height: 201px;" alt="sit" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82615/mod_page/content/6/uvodni_hodina/sit.png" border="0" hspace="0">Obr.3</p>
+<h4>3. Relační model</h4>
+<p>Je to nejrozšířenější technika tvorby databází. Charakteristickou vlastností relačního modelu je realizace vazeb (relací) mezi jednotlivými entitami, kde každá entita vstupující do vazby je zastoupena svým primárním klíčem.</p>
+<h4>4. Objektový model</h4>
+<p>Objektový model databázového řízení dat přidává nové objekty do relačního systému jako jádro moderních informačních systémů. Objektový model dat v databázových systémech vychází ze známých principů objektově orientovaného modelování a programování. Je však dále obohacen o techniky perzistence, reprezentace vztahu, dotazování, transakčního přístupu apod.</p>
+<h3>Databázový systém (DBS=DataBaseSystem)</h3>
+<p>je: <span style="font-weight: bold;">Databáze (DB=Database) + systém řízení báze dat (DBMS=DataBaseManagementSystem)</span></p>
+<h3>Entita, atribut a klíč<br></h3>
+<h4>Entita<br></h4>
+<p>Entita je obecný objekt reálného světa, který se stal předmětem našeho zájmu, a o kterém má smysl uchovávat informace.<br>Entitou může být například obecně <strong>zaměstnanec</strong> (ne už však Petr Vopička - to je výskyt), <strong>kniha</strong> (ne už však "Pán Prstenů" - to je výskyt), <b>příjezd vlaků</b> (ne už však "rychlík č. 223 přijede v 10:25 na třetí kolej" - to je výskyt),...<br>Entitou mohou být <b>obecně lidé, věci, události, pojmy</b>,...<br>Výskyt entity musí být jednoznačně identifikovatelný.<br>Každá entita musí mít uvedený identifikátor (u člověka je to jeho rodné číslo).</p>
+<h4>Atribut</h4>
+<p>Je <span style="font-weight: bold;">vlastnost</span> entity.<br>Jedná se o funkci přiřazující entitě či vztahu mezi entitami určitou hodnotu.<br>Např.: u entity zaměstnanec jsou jeho vlastnostmi: jméno, věk, adresa-ulice, adresa-město,...</p>
+<p>Je třeba rozlišovat mezi atributem a hodnotou atributu. Jestliže u entity zaměstnanec budeme mít atributy: jméno, věk, adresa-ulice,..., potom hodnotami atributu pro konkrétní osobu (výskyt entity - nebo instanci entity) jsou: "Petr", 37, "Ke Kamenci",...</p>
+<h4>Druhy klíčů</h4>
+<ul>
+  <li><span style="font-weight: bold;">Kandidátní klíč (Alternate key)</span>: je to atribut, který jednoznačně identifikuje konkrétní výskyt entity. Například u zaměstnance to může být jeho rodné číslo nebo DNA,... Kandidátním klíč může být také tvořen skupinou atributů (např.: datum narození, jméno a příjmení - můžeme mít dva zaměstnance se stejným jménem a příjmením, ale 100% budou mít jiné datum narození). Entita může mít kandidátních klíčů více.</li>
+  <li><strong>Primární klíč - identifikátor (Primary key)</strong>: volíme jej z kandidátních klíčů. Obvykle vybíráme ten nejjednodušší. Velmi často vytváříme také uměle.</li>
+  <li><span style="font-weight: bold;">Cizí klíč (Foreign key)</span>: atribut nebo množina atributů, které jsou v jiné entitě primárním klíčem. Např.: máme entitu auto, kde jeho primární klíč je jeho SPZ, pak máme entitu vlastníka auta. Vlastník auta má za primární klíč své rodné číslo a jako jeden z jeho atributů je i SPZ jeho auta. </li>
+</ul>
+<p> </p><img title="klič" style="width: 450px; height: 300px;" alt="klič" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82615/mod_page/content/6/uvodni_hodina/klic.png" border="0" hspace="0">Obr.4 <br>Zdroj<br>Obr.1-4: Skřivánková<br><br>ŠIMONOVÁ, Stanislava a Jan PANUŠ. Databázové systémy I: pro kombinovanou formu studia. Vyd. 1. Pardubice: Univerzita Pardubice, 2007, 106 s. ISBN 978-80-7194-988-6.

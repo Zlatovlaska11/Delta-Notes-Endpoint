@@ -1,0 +1,49 @@
+<p dir="ltr">/*<strong>12-1/2</strong></p>
+<p dir="ltr">Společnost DJs on Demand právě zakoupila čtyři nová CD. Pro přidání každého CD použijte explicitní příkaz INSERT do tabulky copy_d_cds (kopie tabulky d_cds). Po dokončení ověřte pomocí příkazu SELECT *.<br></p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">CD_Number Title Producer Year<br></span><span style="font-size: 0.9375rem;">97 Celebrate the Day R &amp; B Inc. 2003<br></span><span style="font-size: 0.9375rem;">98 Holiday Tunes for All Ages Tunes are Us 2004<br></span><span style="font-size: 0.9375rem;">99 Party Music Old Town Records 2004<br></span><span style="font-size: 0.9375rem;">100 Best of Rock and Roll Old Town Records 2004*/</span></p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">--a) vytvoření tabulky copy_d_cds&nbsp;(kopie tabulky d_cds)</span><br></p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">--b) nastavení primárního klíče u tabulky copy_d_cds</span><br></p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">--c) vložení nových řádků dle zadání</span><br></p>
+<p dir="ltr">/*<br>97 Celebrate the Day R &amp; B Inc. 2003<br><span style="font-size: 0.9375rem;">98 Holiday Tunes for All Ages Tunes are Us 2004<br></span><span style="font-size: 0.9375rem;">99 Party Music Old Town Records 2004<br></span><span style="font-size: 0.9375rem;">100 Best of Rock and Roll Old Town Records 2004*/</span></p>
+<p dir="ltr"><br></p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">/*</span><strong style="font-size: 0.9375rem;">12-1/3</strong><br></p>
+<p dir="ltr">DJs on Demand chystá dvě nové akce. Jednou z nich je podzimní fotbalový večírek a druhou je party na téma šedesátých let. Klienti společnosti DJs on Demand si vyžádali skladby uvedené v tabulce. pro své akce. Přidejte tyto skladby do tabulky copy_d_songs&nbsp;(kopie tabulky d_songs)&nbsp;pomocí implicitního příkazu INSERT.<br></p>
+<p dir="ltr">ID Title Duration Type_Code<br><span style="font-size: 0.9375rem;">52 Surfing Summer Not known 12<br></span><span style="font-size: 0.9375rem;">53 Victory Victory 5 min 12*/</span></p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">--a) vytvoření tabulky copy_d_songs</span><br></p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">--b) přidání primárního klíče do tabulky copy_d_songs</span><br></p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">--c) vložení nových řádků dle zadání</span><br></p>
+<p dir="ltr">/*ID Title Duration Type_Code</p>
+<p dir="ltr">52 Surfing Summer Not known 12</p>
+<p dir="ltr">53 Victory Victory 5 min 12*/</p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">/*</span><strong style="font-size: 0.9375rem;">12-1/4</strong><br></p>
+<p dir="ltr">Přidejte dva nové klienty do tabulky copy_d_clients (kopie tabulky d_clients). Použijte buď implicitní, nebo explicitní příkaz INSERT.</p>
+<p dir="ltr">Client_Number First_Name Last_Name Phone Email</p>
+<p dir="ltr">6655 Ayako Dahish 3608859030 dahisha@harbor.net</p>
+<p dir="ltr">6689 Nick Neuville 9048953049 nnicky@charter.net</p>
+<p dir="ltr">*/</p>
+<p dir="ltr">--a) vytvoření tabulky copy_d_clients</p>
+<p dir="ltr"><br></p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">--b) přidání primárního klíče do tabulky copy_d_clients</span><br></p>
+<p dir="ltr"><br></p>
+<p dir="ltr">--c) vložení nových řádků dle zadání</p>
+<p dir="ltr"><br></p>
+<p dir="ltr">/*<strong style="font-size: 0.9375rem;">12-1/5</strong></p>
+<p dir="ltr">Přidání událostí nového klienta do tabulky copy_d_events (kopie tabulky d_events). Náklady na jednotlivé události nebyly k tomuto datu stanoveny.<br></p>
+<p dir="ltr">ID Name Event_Date Description Cost Venue_ID Package_Code Theme_Code Client_Number<br><span style="font-size: 0.9375rem;">110 Ayako Anniversary 07-Jul2004 Party for 50, sixties dress, decorations 245 79 240 6655<br></span><span style="font-size: 0.9375rem;">115 Neuville Sports Banquet 09-Sep2004 Barbecue at residence, college alumni, 100 people 315 87 340 6689</span></p>
+<p dir="ltr">*/</p>
+<p dir="ltr">--a) vytvoření tabulky copy_d_events</p>
+<p dir="ltr"><br></p>
+<p dir="ltr">/*</p>
+<p dir="ltr">ID<span style="white-space:pre">	</span>NAME<span style="white-space:pre">	</span>EVENT_DATE<span style="white-space:pre">	</span>DESCRIPTION<span style="white-space:pre">	</span>COST<span style="white-space:pre">	</span>VENUE_ID<span style="white-space:pre">	</span>PACKAGE_CODE
+    <span style="white-space:pre"> </span>THEME_CODE<span style="white-space:pre">	</span>CLIENT_NUMBER<br><span style="font-size: 0.9375rem;">100</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">Peters Graduation</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">14-May-2004</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">Party for 200, red, white, blue motif</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">8000</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">100
+    </span><span style="font-size: 0.9375rem; white-space: pre;"> </span><span style="font-size: 0.9375rem;">112</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">200</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">5922<br></span><span style="font-size: 0.9375rem;">105</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">Vigil wedding</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">28-Apr-2004</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">Black tie at Four Season hotel</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">10000</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">220
+    </span><span style="font-size: 0.9375rem; white-space: pre;"> </span><span style="font-size: 0.9375rem;">200</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">200</span><span style="font-size: 0.9375rem; white-space: pre;">	</span><span style="font-size: 0.9375rem;">6133</span></p>
+<p dir="ltr">*/</p>
+<p dir="ltr">--b) přidání primárního klíče do tabulky copy_d_events</p>
+<p dir="ltr"><br></p>
+<p dir="ltr">--c) vložení nových řádků dle zadání</p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">/*</span><strong style="font-size: 0.9375rem;">12-1/6</strong><br></p>
+<p dir="ltr">Vytvořte tabulku rep_email pomocí následujícího příkazu:</p>
+<p dir="ltr">CREATE TABLE rep_email<br><span style="font-size: 0.9375rem;">id NUMBER(3) CONSTRAINT rel_id_pk PRIMARY KEY,<br></span><span style="font-size: 0.9375rem;">first_name VARCHAR2(10),<br></span><span style="font-size: 0.9375rem;">last_name VARCHAR2(10),<br></span><span style="font-size: 0.9375rem;">email_address VARCHAR2(10));</span></p>
+<p dir="ltr">Tuto tabulku naplňte dotazem na tabulku zaměstnanců, který zahrnuje pouze ty zaměstnance, kteří pracují na nějaké REP pozici.<br></p>
+<p dir="ltr">*/</p><br>

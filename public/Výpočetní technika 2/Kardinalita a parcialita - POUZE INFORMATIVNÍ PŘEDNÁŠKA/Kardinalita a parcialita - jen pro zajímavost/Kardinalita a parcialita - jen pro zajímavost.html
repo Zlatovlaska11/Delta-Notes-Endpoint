@@ -1,0 +1,43 @@
+<h1>Kardinalita a parcialita </h1>
+<p><span style="font-weight: bold;">Integrita</span>: musí být zajištěno, aby data v databázi byla správná a kompletní.<br><span style="font-weight: bold;">Integritní omezení</span>: je tvrzení, které nám říká, co má platit o objektech v daném výseku světa. Do integritních omezení patří:</p>
+<ul>
+  <li>kardinalita</li>
+  <li>parcialita</li>
+</ul>
+<h3>Kardinalita</h3>
+<p>Znamená maximální a minimální počet výskytů entit v určitém vztahu.<br>Kardinalita je vyjádřena notací:</p>
+<ul>
+  <li> 1:1</li>
+  <li>1:N</li>
+  <li>N:M </li>
+</ul>
+<h4>Příklad 1:1 - Zaměstnanec/Počítač<br></h4>
+<p>Zaměstnanec pracuje na jednom počítači.<br>Na počítači pracuje jeden zaměstnanec.</p>
+<p><img title="1a1" style="width: 502px; height: 99px;" alt="1a1" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82654/mod_page/content/6/Kardinalita_a_parcialita/1a1.png" border="0" vspace="0" hspace="0"> Obr.1</p>
+<h4>Příklad 1:N - Filmy/Kino sál<br></h4>
+<p>Film může být promítán současně ve více kinosálech.<br>V kinosále se promítá jen jeden film.</p>
+<p><img title="1an" style="width: 470px; height: 86px;" alt="1an" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82654/mod_page/content/6/Kardinalita_a_parcialita/1an.png" border="0" vspace="0" hspace="0"> Obr.2</p>
+<h4>Příklad N:M - Student /předmět</h4>Student může mít zapsáno více předmětů.<br>Na daný předmět je zapsáno více studentů.<br>
+<p><br><img title="man" style="width: 400px; height: 76px;" alt="man" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82654/mod_page/content/6/Kardinalita_a_parcialita/man.png" border="0" vspace="0" hspace="0">Obr.3</p>
+<h3>Parcialita</h3>
+<p>Parcialita neboli volitelnost. Zachycuje, zda se <span style="font-weight: bold;">musí</span> či <span style="font-weight: bold;">nemusí</span> týkat všech výskytů zúčastněných entit. Zaměřuje se na členství ve vztahu. Členství muže být:<br></p>
+<ul>
+  <li>povinné</li>
+  <li>nepovinné</li>
+</ul>
+<h4>Povinné členství</h4>Vztah <span style="font-weight: bold;">musí</span> vzniknout.<br>Např: Každé auto musí být přiděleno jednomu dealerovi.<br><br>
+<h4>Nepovinné členství</h4> Vztah <span style="font-weight: bold;">může</span> vzniknout.<br>Např. Hudebník může hrát na hudební nástroj.<br><br>
+<h3>Notace MIN-MAX</h3>Je jedním ze způsobů, jak graficky vyjádřit integritní omezení vztahů v rámci E-R diagramů.<br><br>
+<h4>Hodnoty MIN</h4>Nabývá jen dvou hodnot, a to <span style="font-weight: bold;">0</span> nebo <span style="font-weight: bold;">1</span>.<br>
+<h5>MIN = 0 <br></h5>
+<p>Vyjadřuje<span style="font-weight: bold;"> nepovinné členství</span> ve vztahu, vyjadřuje tedy možnost vzniku vztahu (<span style="font-weight: bold;">může a nemusí</span>). Např. čtenář si <span style="font-weight: bold;">může </span>v knihovně půjčit knihu.<br></p>
+<h5>MIN = 1</h5>Vyjadřuje <span style="font-weight: bold;">povinné členství</span> ve vztahu, vyjadřuje nutnost vzniku vztahu (<span style="font-weight: bold;">musí</span>). Např. student si <span style="font-weight: bold;">musí </span>napsat písemku.<br><br>
+<h4>Hodnota MAX</h4>
+<p>Nabývá jen dvou hodnot, a to<span style="font-weight: bold;"> 1</span> nebo <span style="font-weight: bold;">N</span>.</p>
+<h5>MAX=1</h5>Vyjadřuje, že počet výskytů je jen jeden. Např. houslista hraje jen na jedny housle.<br><br>
+<h5>MAX=N (případně M)</h5>Vyjadřuje, že počet výskytů je více než jeden. Např. Adam vlastní 3 auta.<br><br>
+<h3>Příklady</h3><br>Každý zaměstnanec může mít přiděleno nejvýše jedno auto.<br>Každé auto musí být přiděleno pouze jednomu zaměstnanci.<br><br><img title="pr1" style="width: 470px; height: 90px;" alt="pr1" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82654/mod_page/content/6/Kardinalita_a_parcialita/priklad1.png" border="0" vspace="0" hspace="0">Obr.4<br><br>Každý zaměstnanec musí mít přiděleno pouze jedno auto.<br>Každé auto může být přiděleno i více zaměstnancům.<br><br><img title="pr2" style="width: 416px; height: 74px;" alt="pr2" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82654/mod_page/content/6/Kardinalita_a_parcialita/priklad2.png" border="0" vspace="0" hspace="0">Obr.5<br>Zdroj<br>Obr1.-5: Autor<br><br>ŠIMONOVÁ, Stanislava a Jan PANUŠ. Databázové systémy I: pro kombinovanou formu studia. Vyd. 1. Pardubice: Univerzita Pardubice, 2007, 106 s. ISBN 978-80-7194-988-6. <br> <br> <br><br><br>
+<p><br><br></p>
+<p><br><br></p>
+<p><br></p>
+<p><br></p>

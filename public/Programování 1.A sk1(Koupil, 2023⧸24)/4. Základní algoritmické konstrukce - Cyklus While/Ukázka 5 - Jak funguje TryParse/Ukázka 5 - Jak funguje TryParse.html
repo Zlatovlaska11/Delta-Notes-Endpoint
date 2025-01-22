@@ -1,0 +1,20 @@
+<pre><code>
+        static void Main(string[] args)
+        {
+            string vstup = Console.ReadLine();
+
+            int cislo; //připravená proměnná pro číslo, kam ji TryParse doplní
+
+            //TryParse vrací true nebo false (povedlo/nepovedlo se parsovat), 
+            //a případně - když se povede - doplní do out cislo hodnotu
+            if (int.TryParse(vstup, out cislo)) 
+            {
+                Console.WriteLine("Parsování se povedlo, číslo je {0}", cislo);
+            }
+            else
+            {
+                Console.WriteLine("Parsování se nepovedlo");
+            }
+            Console.ReadKey();
+        }
+</code></pre>

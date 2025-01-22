@@ -1,0 +1,35 @@
+<p dir="ltr"></p>
+<p>/*12_3/2&nbsp;V současné době není ve sloupci START_DATE tabulky Global Foods F_PROMOTIONAL_MENUS nastavena hodnota SYSDATE jako DEFAULT. Vaše manažerka se rozhodla, že by chtěla mít možnost u některých záznamů nastavit datum zahájení propagačních akcí
+    na aktuální den. To bude vyžadovat tři kroky:<span style="font-size: 0.9375rem;">*/</span>
+</p>
+<p>/*a. Ve svém schématu vytvořte kopii tabulky Global Foods F_PROMOTIONAL_MENUS*/</p>
+<p><span style="font-size: 0.9375rem;">/*b. Změňte aktuální atributy sloupce START_DATE*/</span><br></p>
+<p><span style="font-size: 0.9375rem;">/*+ doplnění přidání primárního klíče*/</span><br></p>
+<p><span style="font-size: 0.9375rem;">/*c. VLOŽTE nová data a zkontrolujte výsledky.</span><br></p>
+INSERT nového řádku do tabulky copy_f_promotional_menus pro novou propagaci. Promotion kód (code) je 120. Název propagační akce je "Nový zákazník". Pro datum zahájení zadejte DEFAULT a pro datum ukončení "01-Jun-2005". Dárkem je slevový kupón ve výši
+10 %.
+<p><br></p>
+<p>/*12_3/3&nbsp;Allison Plumbová, manažerka plánování akcí ve společnosti DJs on Demand, vám právě poskytla následující seznam CD, která získala od společnosti, jež ukončuje činnost. Za hodinu chce nový aktualizovaný seznam CD v inventáři, ale nechce měnit
+    původní tabulku D_CDS. Připravte aktualizovaný inventární seznam jen pro ni.<span style="font-size: 0.9375rem;">*/</span></p>
+<p>/*a. Přiřazení nových čísel cd_numbers každému nově získanému disku CD.*/</p>
+<p><span style="font-size: 0.9375rem;">/*b.&nbsp;&nbsp;Vytvořte kopii tabulky D_CDS s názvem manager_copy_d_cds.*/</span></p>
+<p><span style="font-size: 0.9375rem;">/*c.&nbsp;</span><span style="font-size: 0.9375rem;">Do tabulky manager_copy_d_cds vložte nový titul CD pomocí příkazu INSERT:</span><span style="font-size: 0.9375rem;">&nbsp;20, 'Hello World Here I Am', 'Middle Earth Records', '1998'*/</span><br></p>
+<p><span style="font-size: 0.9375rem;">/*d. Pomocí příkazu MERGE přidejte do tabulky manager_copy_d_cds CD z původní tabulky d_cds. Pokud je nalezena shoda, aktualizujte název a rok. Pokud není, vložte údaje z původní tabulky.*/</span><br></p>
+<p><span style="font-size: 0.9375rem;">/*12_3/4&nbsp;</span><span style="font-size: 0.9375rem;">Spusťte následující 3 příkazy, kterými vytvoříte 3 nové tabulky, tyto využijete pro Multi-insert statement. Všechny 3 tabulky by měly být při vytvoření prázdné, proto je v klauzuli WHERE uvedena podmínka WHERE 1=2.</span><span style="font-size: 0.9375rem;">*/</span><br></p>
+<p><code>CREATE TABLE sal_history (employee_id, hire_date, salary) AS SELECT employee_id, hire_date, salary FROM employees WHERE 1=2;</code></p>
+<p><code>CREATE TABLE mgr_history (employee_id, manager_id, salary) AS SELECT employee_id, manager_id, salary FROM employees WHERE 1=2;</code></p>
+<p><code>CREATE TABLE special_sal (employee_id, salary) AS SELECT employee_id, salary FROM employees WHERE 1=2;</code></p>
+<p>-- Tento příkaz provede vytvoření tabulek tak, že převezme strukturu tabulek ze zdrojových tabulek, opět nevytvoří PK a constraints (kromě NOT NULL), WHERE 1=2 zajistí, že nedojde ke zkopírování dat ze zdrojových tabulek.</p>
+<p><code>SELECT * FROM sal_history;<br>
+SELECT * FROM mgr_history;<br>
+SELECT * FROM special_sal;<br></code></p>
+<p>&nbsp;-- všechny tabulky tedy vypíší: no data found</p>
+<p><span style="color: rgb(232, 62, 140); font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 13.125px;">ALTER TABLE sal_history ADD CONSTRAINT sal_history_pk PRIMARY KEY(employee_id);</span><br></p>
+<p><code>ALTER TABLE mgr_history ADD CONSTRAINT mgr_history_pk PRIMARY KEY(employee_id);</code></p>
+<p><code>ALTER TABLE special_sal ADD CONSTRAINT special_sal_pk PRIMARY KEY(employee_id);</code></p>
+<p><span style="font-size: 0.9375rem;">/*</span>Napište příkaz typu Multi-table INSERT, ve kterém nejprve vyberete employee_id, hire_date, salary a manager_id všech zaměstnanců.</p><p></p><ul><li>Pokud je plat vyšší než 20000, vložte employee_id a salary do tabulky special_sal.&nbsp;</li><li>Do tabulky sal_history vložte údaje o employee_id, hire_date a salary.</li><li>Vložte employee_id, manager_id a salary do tabulky mgr_history.</li></ul><p></p><p><span style="font-size: 0.9375rem;">.*/</span><br></p>
+<p><br></p>
+<p><span style="font-size: 0.9375rem;">/*Měla by se vrátit zpráva, že bylo vloženo 39 řádků. Ověřte, zda se vám tato zpráva zobrazí, a ověřte, zda máte v každé tabulce následující počet řádků:</span><br></p>
+<p>sal_history: 19<br><span style="font-size: 0.9375rem;">mgr_history: 19<br></span><span style="font-size: 0.9375rem;">special_sal: 1*/</span></p>
+<p><span style="color: rgb(232, 62, 140); font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 13.125px;">SELECT * FROM special_sal;<br></span><span style="color: rgb(232, 62, 140); font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 13.125px;">SELECT * FROM sal_history;<br></span><span style="color: rgb(232, 62, 140); font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 13.125px;">SELECT * FROM mgr_history;</span></p>
+<p><span style="color: rgb(232, 62, 140); font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 13.125px;">SELECT count(*) FROM sal_history;--19<br></span><span style="color: rgb(232, 62, 140); font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 13.125px;">SELECT count(*) FROM mgr_history;--19<br>S</span><span style="color: rgb(232, 62, 140); font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 13.125px;">ELECT count(*) FROM special_sal;--1</span></p>

@@ -1,0 +1,143 @@
+<h1>Tvorba vlastní databáze - Tabulka</h1> 
+<p>Synonymem ke slovu databáze je <strong>kartotéka</strong>. Základním prvkem každé databáze je <b>tabulka</b>.</p> 
+<p><b>Relační databáze: </b>je databáze složena z několika tabulek, mezi kterými existují vztahy = <b>relace</b>.&nbsp;</p><p>Základní objekty databáze Accessu jsou:</p><p></p><ul><li><b>tabulka</b> - obsahuje data</li><li><b>dotaz</b> - výsledkem výběru dat z různých tabulek</li><li><span><span><b>f</b></span><b>o</b></span><b>rmulář </b>- uživatelsky přívětivé zadávání dat&nbsp;</li><li><b>sestava</b> - výstupy pro tisk</li></ul><p></p> 
+<p></p><p>Tabulka: je seznam informací, které jsou setříděné a skládají se ze záznamů a polí.<br></p><p></p> 
+<p><img width="668" height="179" title="polez" alt="polez" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82630/mod_page/content/12/Access_-_vlastni_databaze/polezaznam.jpg" border="0" hspace="0">Obr.1</p> 
+<p>Při vytvoření prázdné databáze se automaticky vytvoří nová tabulka, ve které nemáte nadefinované pole a typy polí.</p> 
+<h3>Definování nových polí</h3> 
+<p>Můžete provést různými způsoby.</p> 
+<h4>1. způsob - poklepnutí na dané pole </h4> 
+<p><img width="274" height="104" title="zup" alt="zup" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82630/mod_page/content/12/Access_-_vlastni_databaze/1zpusob.jpg" border="0" hspace="0">Obr.2</p> 
+<h4>2. způsob - přes zobrazení</h4> 
+<p>Umožňuje kromě pojmenování určit i datový typ</p> 
+<p>Postup:</p> 
+<ul> 
+  <li>v zobrazení vyberete Návrh zobrazení</li> 
+  <li>uložíte tabulku pod názvem, který samy určíte</li> 
+</ul> 
+<p>V Návrhu zobrazení můžete nastavit</p> 
+<ul> 
+  <li>názvy polí (viz. obrázek červená barva)</li> 
+  <li>datový typ polí (viz. obrázek sv. zelená barva)</li> 
+  <li>primární klíč (viz. obrázek modrá barva)</li> 
+  <li>vlastnosti pole (viz. obrázek zelená barva) můžete nastavit např. vstupní masku, ověřovací pravidlo,...</li> 
+</ul> 
+<p><img width="461" height="379" title="navr" style="width: 461px; height: 379px;" alt="navr" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82630/mod_page/content/12/Access_-_vlastni_databaze/navrzobrazeni.jpg" border="0" hspace="0">Obr.3</p> 
+<h3>Datový typ</h3> 
+<p>Datový typ proměnné určuje hodnoty, které proměnná může obsahovat. Zároveň vám říká, jaké operace s ním mohou být prováděny. =&gt;&nbsp;<b>Podle obsahu pole definujeme datový typ.</b></p><p>Vlastnosti, které chceme v tabulce zaznamenat, můžeme rozdělit na čtyři základní typy:</p><p></p><ul><li><b>textové pole</b></li><li><b>číselné pole</b></li><li><b>logické hodnoty</b></li><li><b>datum a čas</b></li></ul><p><span></span></p><p style=""><span>Do <b>textové informace</b> lze vložit
+jakákoliv data, akorát s&nbsp;nimi lze pracovat pouze jako s&nbsp;textem.</span></p>
+
+<p style=""><b>Číselná data</b> lze používat
+v&nbsp;matematických výpočtech a&nbsp;funkcích.</p>
+
+<p style=""><b>Logické hodnoty </b>v&nbsp;sobě umožňují
+uložit pouze dva stavy Ano/Ne, 0/1, True/False. Výhoda je taková, že tato
+informace zabírá velmi málo místa.</p>
+
+<p style="">Pro hodnoty <b>data a&nbsp;času</b> lze
+využívat také některé matematické operace a&nbsp;funkce a&nbsp;k&nbsp;tomu
+ještě všechny pro datum a&nbsp;čas.</p><br><p></p><p></p> 
+<p><img width="571" height="266" title="datové typy" style="width: 571px; height: 266px;" alt="datové typy" src="https://student.delta-studenti.cz/webservice/pluginfile.php/82630/mod_page/content/12/Access_-_vlastni_databaze/datove_typy.jpg" border="0" hspace="0">Obr.4</p> 
+<p>Datový typ můžete určit:</p> 
+<ul> 
+  <li>přes zobrazení Návrh zobrazení v poli datový typ (viz. obrázek 3)</li> 
+  <li>přes kartu Pole v Nástrojích tabulky</li> 
+</ul> 
+<p><img src="https://student.delta-studenti.cz/webservice/pluginfile.php/82630/mod_page/content/12/A.PNG?time=1539587951891" alt="karta tab" width="1484" height="331" class="img-responsive atto_image_button_left">Obr.5</p> 
+<h3>Karta Nástroje tabulky - Pole&nbsp;</h3> 
+<p>Jedná se o kartu (dříve Datový list), kterou nelze otevřít, pokud nemáte vytvořenou tabulku. Karta datový list nám umožňuje:</p> 
+<ul> 
+  <li>přidávat nová pole</li> 
+  <li>odstranit či přejmenovat pole</li> 
+  <li>určovat datové typy</li> 
+  <li>určovat formáty: měna, datum,...</li> 
+  <li>určit primární klíč</li> 
+  <li>vytvářet vztahy mezi tabulkami</li> 
+  <li>atd.</li> 
+</ul> 
+<h3>Vlastnosti pole</h3> 
+<p>Jsou různé, podle datového typu. Zde je přehled těch nejpoužívanějších:<br></p> 
+<ul> 
+  <li><span style="font-weight: bold;">Velikost pole</span>: nastavení maximální velikosti dat. Dá se použít u datového typu:</li> 
+  <ul> 
+    <li>číslo</li> 
+    <li>automatické číslo</li> 
+    <li>text</li> 
+  </ul> 
+</ul> 
+<ul> 
+  <li><span style="font-weight: bold;">Formát</span>: přizpůsobení výchozího vzhledu pole. Dá se použít u datového typu:</li> 
+  <ul> 
+    <li>text</li> 
+    <li>memo</li> 
+    <li>číslo</li> 
+    <li>datum a čas</li> 
+    <li>měna</li> 
+    <li>automatické číslo</li> 
+    <li>ano/ne</li> 
+    <li>hypertextový odkaz</li> 
+  </ul> 
+</ul> 
+<ul> 
+  <li><span style="font-weight: bold;">Počet desetinných míst</span>: dá se použít u datového typu:</li> 
+  <ul> 
+    <li>číslo</li> 
+    <li>měna</li> 
+  </ul> 
+</ul> 
+<ul> 
+  <li><span style="font-weight: bold;">Nová hodnota</span>: použití jen pro automatické číslo, aby se v dalším záznamu zobrazila nová hodnota, která bude navazovat na tu předešlou.</li> 
+</ul> 
+<ul> 
+  <li><span style="font-weight: bold;">Vstupní maska</span>: slouží k zobrazení znaků zadávání dat např. rodné číslo má vstupní masku ******/****. Dá se použít u datového typu:</li> 
+  <ul> 
+    <li>text</li> 
+    <li>číslo</li> 
+    <li>datum a čas</li> 
+    <li>měna</li> 
+  </ul> 
+</ul> 
+<ul> 
+  <li><span style="font-weight: bold;">Ověřovací pravidlo</span>: slouží k zadání výrazu, který musí záznam v poli splnit. Např. v poli věk zaměstnance bude uvedeno v ověřovacích pravidlech <span style="font-weight: bold;">&gt;15</span>. Sekretářka, pak nemůže zadat, že je zaměstnanci 5 let. Dá se použít u datového typu:</li> 
+  <ul> 
+    <li>text</li> 
+    <li>memo</li> 
+    <li>číslo</li> 
+    <li>datum a čas</li> 
+    <li>měna</li> 
+    <li>Ano/ne</li> 
+    <li>hypertextový odkaz</li> 
+  </ul> 
+</ul> 
+<ul> 
+  <li><span style="font-weight: bold;">Ověřovací text</span>: je text který se zobrazí při špatně zadané hodnotě. Dá se použít u datového typu:</li> 
+  <ul> 
+    <li>text</li> 
+    <li>memo</li> 
+    <li>číslo</li> 
+    <li>datum a čas</li> 
+    <li>měna</li> 
+    <li>Ano/ne</li> 
+    <li>hypertextový odkaz</li> 
+  </ul> 
+</ul> 
+<ul> 
+  <li><span style="font-weight: bold;">Je nutno zadat</span>: vynucuje si zadat údaje, jinak nemůžete pokračovat. Tato vlastnost se <span style="font-weight: bold;">nedá</span> zadat u datového <strong>typu automatické číslování</strong>.</li> 
+</ul> 
+<ul> 
+  <li><span style="font-weight: bold;">Indexování</span>: urychlení přístupu pro čtení dat v tomto poli vytvořením a použitím indexu. Dá se použít u datového typu:</li> 
+  <ul> 
+    <li>text</li> 
+    <li>memo</li> 
+    <li>číslo</li> 
+    <li>datum a čas</li> 
+    <li>měna</li> 
+    <li>automatické číslo</li> 
+    <li>Ano/ne</li> 
+    <li>hypertextový odkaz</li> 
+  </ul> 
+</ul><br>Výuková videa dostupná na YouTube:&nbsp;<br><br><ul><li><span style="font-size: 0.9375rem;">MS Access - tvorba tabulky, datové typy&nbsp; &nbsp;https://www.youtube.com/watch?v=2-fJI61cenc</span></li><li><yt-formatted-string force-default-=""><p><yt-formatted-string force-default-="">Access - Vytváření jednotlivých objektů databáze&nbsp;&nbsp;https://www.youtube.com/watch?v=p7jxX_FCT7w</yt-formatted-string></p></yt-formatted-string></li><li><p><yt-formatted-string force-default-=""><p><yt-formatted-string force-default-="">Access - Jak nastavit podmínky pro vstupní údaje&nbsp;&nbsp;https://www.youtube.com/watch?v=zLOCgczDdaA</yt-formatted-string></p></yt-formatted-string></p></li></ul><br><br> 
+<p>Zdroj:</p> 
+<p>Obr.1-3 a obr 5: Autor<br>Obr.4: ŠEDOVÁ, Hana. Microsoft Access 2007 nejen pro školy. Vyd. 1. Kralice na Hané: Computer Media, 2010, 192 s. ISBN 978-80-7402-038-4.</p>ŠEDOVÁ, Hana. Microsoft Access 2007 nejen pro školy. Vyd. 1. Kralice na Hané: Computer Media, 2010, 192 s. ISBN 978-80-7402-038-4. 
+<p><br></p> 
+<p></p>

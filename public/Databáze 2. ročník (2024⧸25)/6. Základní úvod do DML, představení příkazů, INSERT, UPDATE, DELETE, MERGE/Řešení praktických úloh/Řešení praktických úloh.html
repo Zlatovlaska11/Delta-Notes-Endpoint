@@ -1,0 +1,284 @@
+<p dir="ltr">/*<strong>12-1/2</strong></p>
+<p dir="ltr">DJs on Demand just purchased four new CDs. Use an explicit INSERT statement to add each CD</p>
+<p dir="ltr">to the copy_d_cds table. After completing the entries, execute a SELECT * statement to verify</p>
+<p dir="ltr">your work.</p>
+<p dir="ltr"><br></p>
+<p dir="ltr">CD_Number Title Producer Year</p>
+<p dir="ltr">97 Celebrate the Day R &amp; B Inc. 2003</p>
+<p dir="ltr">98 Holiday Tunes for All Ages Tunes are Us 2004</p>
+<p dir="ltr">99 Party Music Old Town Records 2004</p>
+<p dir="ltr">100 Best of Rock and Roll Old Town Records 2004*/</p>
+<p dir="ltr"><br></p>
+<p dir="ltr">--a) vytvoření tabulky copy_d_cds</p>
+<p dir="ltr"><code>CREATE TABLE copy_d_cds AS SELECT * FROM d_cds;</code></p>
+<p dir="ltr"><code>SELECT * FROM copy_d_cds;</code></p>
+<p dir="ltr">/*Výsledek:</p>
+<p dir="ltr">CD_NUMBER<span style="white-space:pre">	</span>TITLE<span style="white-space:pre">	</span>PRODUCER<span style="white-space:pre">	</span>YEAR</p>
+<p dir="ltr">90<span style="white-space:pre">	</span>The Celebrants Live in Concert<span style="white-space:pre">	</span>Old Town Records<span style="white-space:pre">	</span>1997</p>
+<p dir="ltr">91<span style="white-space:pre">	</span>Party Music for All Occasions<span style="white-space:pre">	</span>The Music Man<span style="white-space:pre">	</span>2000</p>
+<p dir="ltr">92<span style="white-space:pre">	</span>Back to the Shire<span style="white-space:pre">	</span>Middle Earth Records<span style="white-space:pre">	</span>2002</p>
+<p dir="ltr">93<span style="white-space:pre">	</span>Songs from My Childhood<span style="white-space:pre">	</span>Old Town Records<span style="white-space:pre">	</span>1999</p>
+<p dir="ltr">94<span style="white-space:pre">	</span>Carpe Diem<span style="white-space:pre">	</span>R &amp; B Inc.<span style="white-space:pre">	</span>2000</p>
+<p dir="ltr">95<span style="white-space:pre">	</span>Here Comes the Bride<span style="white-space:pre">	</span>The Music Man<span style="white-space:pre">	</span>2001</p>
+<p dir="ltr">96<span style="white-space:pre">	</span>Graduation Songbook<span style="white-space:pre">	</span>Tunes Are Us<span style="white-space:pre">	</span>1998</p>
+<p dir="ltr">98<span style="white-space:pre">	</span>Whirled Peas<span style="white-space:pre">	</span>Old Town Records*/</p>
+<p dir="ltr">--b) nastavení primárního klíče u tabulky copy_d_cds</p>
+<p dir="ltr"><code>ALTER TABLE copy_d_cds ADD CONSTRAINT copy_d_cds_pk PRIMARY KEY(cd_number);</code></p>
+<p dir="ltr">--c) vložení nových řádků dle zadání</p>
+<p dir="ltr">/*97 Celebrate the Day R &amp; B Inc. 2003</p>
+<p dir="ltr">98 Holiday Tunes for All Ages Tunes are Us 2004</p>
+<p dir="ltr">99 Party Music Old Town Records 2004</p>
+<p dir="ltr">100 Best of Rock and Roll Old Town Records 2004*/</p>
+<p dir="ltr"><code>INSERT INTO copy_d_cds(cd_number, title, producer, year) VALUES (97, 'Celebrate The Day', 'R&amp;B Inc.', 2003);</code></p>
+<p dir="ltr"><code>--ok</code></p>
+<p dir="ltr"><code>INSERT INTO copy_d_cds(cd_number, title, producer, year) VALUES (98, 'Holiday Tunes for All Ages', 'Tunes are Us', 2004);</code></p>
+<p dir="ltr"><code>-- ORA-00001: unique constraint (CZ_A400_SQL_S24.COPY_D_CDS_PK) violated - nelze do sloupce s omezením PK stejnou hodnotu vícekrát</code></p>
+<p dir="ltr"><br></p>
+<p dir="ltr"><code>INSERT INTO copy_d_cds(cd_number, title, producer, year) VALUES (99, 'Party Music', 'Old Town Records', 2004);</code></p>
+<p dir="ltr"><code>--ok</code></p>
+<p dir="ltr"><code>INSERT INTO copy_d_cds(cd_number, title, producer, year) VALUES (100, 'Best of Rock and Roll', 'Old Town Records', 2004);</code></p>
+<p dir="ltr"><code>--ok</code></p>
+<p dir="ltr"><br></p>
+<p dir="ltr">/*<strong>12-1/3</strong></p>
+<p dir="ltr">DJs on Demand has two new events coming up. One event is a fall football party and the other</p>
+<p dir="ltr">event is a sixties theme party. The DJs on Demand clients requested the songs shown in the table</p>
+<p dir="ltr">for their events. Add these songs to the copy_d_songs table using an implicit INSERT statement.</p>
+<p dir="ltr">ID Title Duration Type_Code</p>
+<p dir="ltr">52 Surfing Summer Not known 12</p>
+<p dir="ltr">53 Victory Victory 5 min 12*/</p>
+<p dir="ltr"><br></p>
+<p dir="ltr">--a) vytvoření tabulky copy_d_songs</p>
+<p dir="ltr"><code>CREATE TABLE copy_d_songs AS SELECT * FROm d_songs;</code></p>
+<p dir="ltr"><code>SELECT * FROM copy_d_songs;</code></p>
+<p dir="ltr">/*</p>
+<p dir="ltr">ID<span style="white-space:pre">	</span>TITLE<span style="white-space:pre">	</span>DURATION<span style="white-space:pre">	</span>ARTIST<span style="white-space:pre">	</span>TYPE_CODE</p>
+<p dir="ltr">45<span style="white-space:pre">	</span>Its Finally Over<span style="white-space:pre">	</span>5 min<span style="white-space:pre">	</span>The Hobbits<span style="white-space:pre">	</span>12</p>
+<p dir="ltr">46<span style="white-space:pre">	</span>Im Going to Miss My Teacher<span style="white-space:pre">	</span>2 min<span style="white-space:pre">	</span>Jane Pop<span style="white-space:pre">	</span>12</p>
+<p dir="ltr">47<span style="white-space:pre">	</span>Hurrah for Today<span style="white-space:pre">	</span>3 min<span style="white-space:pre">	</span>The Jubilant Trio<span style="white-space:pre">	</span>77</p>
+<p dir="ltr">48<span style="white-space:pre">	</span>Meet Me At the Altar<span style="white-space:pre">	</span>6 min<span style="white-space:pre">	</span>Bobby West<span style="white-space:pre">	</span>1</p>
+<p dir="ltr">49<span style="white-space:pre">	</span>Lets Celebrate<span style="white-space:pre">	</span>8 min<span style="white-space:pre">	</span>The Celebrants<span style="white-space:pre">	</span>77</p>
+<p dir="ltr">50<span style="white-space:pre">	</span>All These Years<span style="white-space:pre">	</span>10 min<span style="white-space:pre">	</span>Diana Crooner<span style="white-space:pre">	</span>88</p>
+<p dir="ltr">*/</p>
+<p dir="ltr">--b) přidání primárního klíče do tabulky copy_d_songs</p>
+<p dir="ltr"><code>ALTER TABLE copy_d_songs ADD CONSTRAINT copy_d_songs_pk PRIMARY KEY (ID);</code></p>
+<p dir="ltr">--c) vložení nových řádků dle zadání</p>
+<p dir="ltr">/*ID Title Duration Type_Code</p>
+<p dir="ltr">52 Surfing Summer Not known 12</p>
+<p dir="ltr">53 Victory Victory 5 min 12*/</p>
+<p dir="ltr"><br></p>
+<p dir="ltr"><code>INSERT INTO copy_d_songs (id, title, duration, type_code) VALUES (52,'Surfing Summer','',12);</code></p>
+<p dir="ltr"><code>INSERT INTO copy_d_songs (id, title, duration, type_code) VALUES (53,'Victory Victory','5 min',12);</code></p>
+<p dir="ltr">/*<strong style="font-size: 0.9375rem;">12-1/4</strong></p>
+<p dir="ltr">Add the two new clients to the copy_d_clients table. Use either an implicit or an explicit INSERT.</p>
+<p dir="ltr">Client_Number First_Name Last_Name Phone Email</p>
+<p dir="ltr">6655 Ayako Dahish 3608859030 dahisha@harbor.net</p>
+<p dir="ltr">6689 Nick Neuville 9048953049 nnicky@charter.net</p>
+<p dir="ltr">*/</p>
+<p dir="ltr">--a) vytvoření tabulky copy_d_clients</p>
+<p dir="ltr"><code>CREATE TABLE copy_d_clients AS SELECT * FROM d_clients;</code></p>
+<p dir="ltr"><code>SELECT * FROM copy_d_clients;</code></p>
+<p dir="ltr">/*</p>
+<p dir="ltr">CLIENT_NUMBER<span style="white-space:pre">	</span>FIRST_NAME<span style="white-space:pre">	</span>LAST_NAME<span style="white-space:pre">	</span>PHONE<span style="white-space:pre">	</span>EMAIL</p>
+<p dir="ltr">5922<span style="white-space:pre">	</span>Hiram<span style="white-space:pre">	</span>Peters<span style="white-space:pre">	</span>3715832249<span style="white-space:pre">	</span>hpeters@yahoo.com</p>
+<p dir="ltr">5857<span style="white-space:pre">	</span>Serena<span style="white-space:pre">	</span>Jones<span style="white-space:pre">	</span>7035335900<span style="white-space:pre">	</span>serena.jones@jones.com</p>
+<p dir="ltr">6133<span style="white-space:pre">	</span>Lauren<span style="white-space:pre">	</span>Vigil<span style="white-space:pre">	</span>4072220090<span style="white-space:pre">	</span>lbv@lbv.net</p>
+<p dir="ltr">*/</p>
+<p dir="ltr">--b) přidání primárního klíče do tabulky copy_d_clients</p>
+<p dir="ltr"><code>ALTER TABLE copy_d_clients ADD CONSTRAINT copy_d_clients_pk PRIMARY KEY (client_number);</code></p>
+<p dir="ltr">--c) vložení nových řádků dle zadání</p>
+<p dir="ltr"><code>INSERT INTO copy_d_clients (client_number, first_name, last_name, phone, email) VALUES (6655,'Ayako', 'Dahish','3608859030','dahisha@harbor.net');</code></p>
+<p dir="ltr"><code>INSERT INTO copy_d_clients (client_number, first_name, last_name, phone, email) VALUES (6689,'Nick', 'Neuville ','9048953049','nnicky@charter.net');</code></p>
+<p dir="ltr">/*<strong style="font-size: 0.9375rem;">12-1/5</strong></p>
+<p dir="ltr">Add the new client’s events to the copy_d_events table. The cost of each event has not been</p>
+<p dir="ltr">determined at this date.</p>
+<p dir="ltr">ID Name Event_Date Description Cost Venue_ID Package_Code Theme_Code Client_Number</p>
+<p dir="ltr">110 Ayako Anniversary 07-Jul2004 Party for 50, sixties dress, decorations 245 79 240 6655</p>
+<p dir="ltr">115 Neuville Sports Banquet 09-Sep2004 Barbecue at residence, college alumni, 100 people 315 87 340 6689</p>
+<p dir="ltr">*/</p>
+<p dir="ltr">--a) vytvoření tabulky copy_d_events</p>
+<p dir="ltr"><code>CREATE TABLE copy_d_events AS SELECT * FROM d_events;</code></p>
+<p dir="ltr"><code>SELECT * FROM copy_d_events;</code></p>
+<p dir="ltr">/*</p>
+<p dir="ltr">ID<span style="white-space:pre">	</span>NAME<span style="white-space:pre">	</span>EVENT_DATE<span style="white-space:pre">	</span>DESCRIPTION<span style="white-space:pre">	</span>COST<span style="white-space:pre">	</span>VENUE_ID<span style="white-space:pre">	</span>PACKAGE_CODE
+    <span style="white-space:pre"> </span>THEME_CODE<span style="white-space:pre">	</span>CLIENT_NUMBER</p>
+<p dir="ltr">100<span style="white-space:pre">	</span>Peters Graduation<span style="white-space:pre">	</span>14-May-2004<span style="white-space:pre">	</span>Party for 200, red, white, blue motif<span style="white-space:pre">	</span>8000<span style="white-space:pre">	</span>100
+    <span style="white-space:pre"> </span>112<span style="white-space:pre">	</span>200<span style="white-space:pre">	</span>5922</p>
+<p dir="ltr">105<span style="white-space:pre">	</span>Vigil wedding<span style="white-space:pre">	</span>28-Apr-2004<span style="white-space:pre">	</span>Black tie at Four Season hotel<span style="white-space:pre">	</span>10000<span style="white-space:pre">	</span>220
+    <span style="white-space:pre"> </span>200<span style="white-space:pre">	</span>200<span style="white-space:pre">	</span>6133</p>
+<p dir="ltr">*/</p>
+<p dir="ltr">--b) přidání primárního klíče do tabulky copy_d_events</p>
+<p dir="ltr"><code>ALTER TABLE copy_d_events ADD CONSTRAINT copy_d_events_pk PRIMARY KEY (ID);</code></p>
+<p dir="ltr">--c) vložení nových řádků dle zadání</p>
+<p dir="ltr"><code>INSERT INTO copy_d_events (ID, NAME, EVENT_DATE, DESCRIPTION, COST, VENUE_ID, PACKAGE_CODE, THEME_CODE, CLIENT_NUMBER)</code></p>
+<p dir="ltr"><code>VALUES (110, 'Ayako Anniversary', TO_DATE('07-Jul-2004','DD-Mon-YYYY'), 'Party for 50, sixties dress, decorations', NULL,245,79,240,6655);</code></p>
+<p dir="ltr"><code>--chyba ORA-01400: cannot insert NULL into ("CZ_A400_SQL_S24"."COPY_D_EVENTS"."COST"), která je způsobena tím, že sloupec COST je povinný, je tedy nutné, aby byl vyplněn, jelikož COST není k dnešnímu datu známé, zapíšeme hodnotu 0</code></p>
+<p dir="ltr"><code>INSERT INTO copy_d_events (ID, NAME, EVENT_DATE, DESCRIPTION, COST, VENUE_ID, PACKAGE_CODE, THEME_CODE, CLIENT_NUMBER)</code></p>
+<p dir="ltr"><code>VALUES (110, 'Ayako Anniversary', TO_DATE('07-Jul-2004','DD-Mon-YYYY'), 'Party for 50, sixties dress, decorations',0,245,79,240,6655);</code></p>
+<p dir="ltr"><code>INSERT INTO copy_d_events (ID, NAME, EVENT_DATE, DESCRIPTION, COST, VENUE_ID, PACKAGE_CODE, THEME_CODE, CLIENT_NUMBER)</code></p>
+<p dir="ltr"><code>VALUES (110, 'Ayako Anniversary', TO_DATE('07-Jul-2004','DD-Mon-YYYY'), 'Party for 50, sixties dress, decorations',0,245,79,240,6655);</code></p>
+<p dir="ltr">/*<strong style="font-size: 0.9375rem;">12-1/6</strong></p>
+<p dir="ltr">Create a table called rep_email using the following statement:</p>
+<p dir="ltr">CREATE TABLE rep_email</p>
+<p dir="ltr">id NUMBER(3) CONSTRAINT rel_id_pk PRIMARY KEY,</p>
+<p dir="ltr">first_name VARCHAR2(10),</p>
+<p dir="ltr">last_name VARCHAR2(10),</p>
+<p dir="ltr">email_address VARCHAR2(10));</p>
+<p dir="ltr"><span style="font-size: 0.9375rem;"><br></span></p>
+<p dir="ltr"><span style="font-size: 0.9375rem;">Populate this table by running a query on the employees table that includes only those employees</span><br></p>
+<p dir="ltr">who are REP’s.</p>
+<p dir="ltr">*/</p>
+<p dir="ltr"><code>CREATE TABLE rep_email (</code></p>
+<p dir="ltr"><code>id NUMBER(3) CONSTRAINT rel_id_pk PRIMARY KEY,</code></p>
+<p dir="ltr"><code>first_name VARCHAR2(10),</code></p>
+<p dir="ltr"><code>last_name VARCHAR2(10),</code></p>
+<p dir="ltr"><code>email_address VARCHAR2(10));</code></p>
+<p dir="ltr"><br></p>
+<p dir="ltr"><code>INSERT INTO rep_email (id, first_name, last_name, email_address)</code></p>
+<p dir="ltr"><code>SELECT employee_id, first_name, last_name, email</code></p>
+<p dir="ltr"><code>FROM employees</code></p>
+<p dir="ltr"><code>WHERE UPPER(job_id) LIKE '%REP%;</code></p>
+/*12-2/3<br><br>Add the orders shown to the Global Fast Foods copy_f_orders table:<br><br>ORDER_NUMBER ORDER_DATE ORDER_TOTAL CUST_ID STAFF_ID <br><br>5680 June 12, 2004 159.78 145 9<br>5691 09-23-2004 145.98 225 12 <br>5701 July 4, 2004 229.31 230 12<br><br>*/<br><br>select
+* from f_orders;<br>CREATE TABLE copy_f_orders AS SELECT * FROM f_orders;<br>ALTER TABLE copy_f_orders ADD CONSTRAINT copy_f_orders_pk PRIMARY KEY(order_number);<br>INSERT INTO copy_f_orders (order_number, order_date, order_total, cust_id, staff_id) VALUES
+(5680, '12-Jun-2004', 159.78, 145, 9);<br>INSERT INTO copy_f_orders (order_number, order_date, order_total, cust_id, staff_id) VALUES (5691, '23-Sep-2004', 145.98, 225, 12);<br>INSERT INTO copy_f_orders (order_number, order_date, order_total, cust_id,
+staff_id) VALUES (5701, '04-Jul-2004', 229.31, 230, 12);<br>/*12-2/4<br>Add the new customers shown below to the copy_f_customers table. You may already have added Katie Hernandez. Will you be able to add all these records successfully?<br>ID FIRST_NAME
+LAST_NAME ADDRESS CITY STATE ZIP PHONE_NUMBER <br>145 Katie Hernandez 92 Chico Way Los Angeles CA 98008 8586667641<br>225 Daniel Spode 1923 Silverado Denver CO 80219 7193343523<br>230 Adam Zurn 5 Admiral Way Seattle WA 4258879009<br>*/<br>CREATE TABLE
+copy_f_customers AS SELECT * FROM f_customers;<br>ALTER TABLE copy_f_customers ADD CONSTRAINT copy_f_customers_pk PRIMARY KEY (ID);<br>INSERT INTO copy_f_customers(id, first_name, last_name, address, city, state, zip, phone_number) VALUES (145, 'Katie',
+'Hernandez', '92 Chico Way', 'Los Angeles', 'CA', 98008, 8586667641);<br>INSERT INTO copy_f_customers(id, first_name, last_name, address, city, state, zip, phone_number) VALUES (225, 'Daniel', 'Spode', '1923 Silverado Street', 'Denver', 'CO', 98107, 4258879009)
+;
+<br>--Není možné provést insert u ID 230, jelikož zip nemůže být null.<br>--ORA-01400: cannot insert NULL into ("CZ_A400_SQL_S24"."COPY_F_CUSTOMERS"."ZIP")<br>INSERT INTO copy_f_customers(id, first_name, last_name, address, city, state, phone_number)
+VALUES (230, 'Adam', 'Zurn', '5 Admiral Way', 'Seattle', 'WA', 4258879009) ;<br><br>/* 12-2/5<br>Sue Doe has been an outstanding Global Foods staff member and has been given a salary raise. She will now be paid the same as Bob Miller. Update her record
+in copy_f_staffs.<br>*/<br>SELECT salary FROM copy_f_staffs WHERE first_name = 'Bob' AND last_name = 'Miller';--10<br>UPDATE copy_f_staffs SET salary = (SELECT salary FROM copy_f_staffs WHERE first_name = 'Bob' AND last_name = 'Miller') WHERE first_name
+= 'Sue' AND last_name ='Doe';<br><br>/* 12-2/6<br>Global Fast Foods is expanding their staff. The manager, Monique Tuttle, has hired Kai Kim. Not all information is available at this time, but add the information shown at right.<br>ID FIRST_NAME LAST_NAME
+BIRTHDATE SALARY STAFF_TYPE<br>25 Kai Kim 3-Nov-1988 6.75 Order Taker<br><br>*/<br>SELECT * FROM copy_f_staffs;<br>--sloupce, které mohou být null, tzn. nemají omezení NOT NULL, jedná se o tyto sloupce: OVERTIME_RATE, TRAINING, MANAGER_ID, MANAGER_BUDGET<br>--ukázka
+vkládání null do sloupců<br>INSERT INTO copy_f_staffs(id, first_name, last_name,birthdate,salary, overtime_rate, training, staff_type, manager_id, manager_budget, manager_target) VALUES (25, 'Kai', 'Kim', '03-Nov-1988', 6.75, null, null, 'Order Taker',
+null, null, null);<br>--jiný způsob vložení s ukázkou s vlastním jménem, zde není nutné vypisovat všechny sloupce<br>--sloupce, které mohou být null jednoduše vynecháme při vkládání<br>INSERT INTO copy_f_staffs(id, first_name, last_name,birthdate,salary,
+staff_type) VALUES (26, 'Monika', 'Borkovcová', '03-Nov-1988', 6.75,'Order Taker');<br>SELECT * FROM copy_f_staffs;<br>/* 12-2/7<br>Now that all the information is available for Kai Kim, update his Global Fast Foods record to include the following: Kai
+will have the same manager as Sue Doe. He does not qualify for overtime. Leave the values for training, manager budget, and manager target as null.<br>*/<br>--z předešlého příkladu víme, že Kai Kim má id=25<br>SELECT manager_id FROM copy_f_staffs WHERE
+first_name = 'Sue' AND last_name = 'Doe';--19<br>UPDATE copy_f_staffs SET manager_id = (SELECT manager_id FROM copy_f_staffs WHERE first_name = 'Sue' AND last_name = 'Doe') WHERE ID = 25;<br>SELECT * FROM copy_f_staffs WHERE ID=25;<br>/*<br>8. Execute
+the following SQL statement. Record your results.<br>DELETE from departments WHERE department_id = 60;<br>*/<br>--vrací chybu ORA-02292: integrity constraint (CZ_A400_SQL_S24.EMP_DEPT_FK) violated - child record found<br>-- čím je chyba způsobena?<br>--jedná
+se o porušení referenční integrity dat, kdy chceme odstranit PK z tabulky departments a přitom tento PK<br>--využívá jiná tabulka jako FK, v tomto případě se jedná o tabulku employees.<br>SELECT * FROM departments where department_id=60;<br>--vrací:<br>--DEPARTMENT_ID&nbsp;&nbsp;&nbsp;
+DEPARTMENT_NAME&nbsp;&nbsp;&nbsp; MANAGER_ID&nbsp;&nbsp;&nbsp; LOCATION_ID<br>--60&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IT&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 103&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1400
+<br>SELECT * FROM employees WHERE department_id=60;<br>--EMPLOYEE_ID&nbsp;&nbsp;&nbsp; FIRST_NAME&nbsp;&nbsp;&nbsp; LAST_NAME&nbsp;&nbsp;&nbsp; EMAIL&nbsp;&nbsp;&nbsp; PHONE_NUMBER&nbsp;&nbsp;&nbsp; HIRE_DATE&nbsp;&nbsp;&nbsp; JOB_ID&nbsp;&nbsp;&nbsp;
+SALARY&nbsp;&nbsp;&nbsp; COMMISSION_PCT&nbsp;&nbsp;&nbsp; MANAGER_ID&nbsp;&nbsp;&nbsp; ---------DEPARTMENT_ID&nbsp;&nbsp;&nbsp; BONUS<br>--103&nbsp;&nbsp;&nbsp; Alexander&nbsp;&nbsp;&nbsp; Hunold&nbsp;&nbsp;&nbsp; AHUNOLD&nbsp;&nbsp;&nbsp; 590.423.4567&nbsp;&nbsp;&nbsp;
+03-Jan-1990&nbsp;&nbsp;&nbsp; IT_PROG&nbsp;&nbsp;&nbsp; 9000&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; 102&nbsp;&nbsp;&nbsp; 60&nbsp;&nbsp;&nbsp; -<br>--104&nbsp;&nbsp;&nbsp; Bruce&nbsp;&nbsp;&nbsp; Ernst&nbsp;&nbsp;&nbsp; BERNST&nbsp;&nbsp;&nbsp; 590.423.4568&nbsp;&nbsp;&nbsp;
+21-May-1991&nbsp;&nbsp;&nbsp; IT_PROG&nbsp;&nbsp;&nbsp; 6000&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; 103&nbsp;&nbsp;&nbsp; 60&nbsp;&nbsp;&nbsp; -<br>--107&nbsp;&nbsp;&nbsp; Diana&nbsp;&nbsp;&nbsp; Lorentz&nbsp;&nbsp;&nbsp; DLORENTZ&nbsp;&nbsp;&nbsp; 590.423.5567&nbsp;&nbsp;&nbsp;
+07-Feb-1999&nbsp;&nbsp;&nbsp; IT_PROG&nbsp;&nbsp;&nbsp; 4200&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; 103&nbsp;&nbsp;&nbsp; 60<br>/*<br>9. Kim Kai has decided to go back to college and does not have the time to work and go to school.<br>Delete him from the
+Global Fast Foods staff. Verify that the change was made.<br>*/<br>SELECT * FROM copy_f_staffs;<br>ID&nbsp;&nbsp;&nbsp; FIRST_NAME&nbsp;&nbsp;&nbsp; LAST_NAME&nbsp;&nbsp;&nbsp; BIRTHDATE&nbsp;&nbsp;&nbsp; SALARY&nbsp;&nbsp;&nbsp; OVERTIME_RATE&nbsp;&nbsp;&nbsp;
+TRAINING&nbsp;&nbsp;&nbsp; STAFF_TYPE&nbsp;&nbsp;&nbsp; MANAGER_ID&nbsp;&nbsp;&nbsp; MANAGER_BUDGET&nbsp;&nbsp;&nbsp; MANAGER_TARGET<br>12&nbsp;&nbsp;&nbsp; Sue&nbsp;&nbsp;&nbsp; Doe&nbsp;&nbsp;&nbsp; 01-Jul-1980&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp;
+10.25&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Order Taker&nbsp;&nbsp;&nbsp; 19&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; -<br>9&nbsp;&nbsp;&nbsp; Bob&nbsp;&nbsp;&nbsp; Miller&nbsp;&nbsp;&nbsp; 19-Mar-1979&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;
+Grill&nbsp;&nbsp;&nbsp; Cook&nbsp;&nbsp;&nbsp; 19&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; -<br>19&nbsp;&nbsp;&nbsp; Monique&nbsp;&nbsp;&nbsp; Tuttle&nbsp;&nbsp;&nbsp; 30-Mar-1969&nbsp;&nbsp;&nbsp; 60&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;
+Manager&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; 50000&nbsp;&nbsp;&nbsp; 70000<br>25&nbsp;&nbsp;&nbsp; Kai&nbsp;&nbsp;&nbsp; Kim&nbsp;&nbsp;&nbsp; 03-Nov-1988&nbsp;&nbsp;&nbsp; 6.75&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Order Taker&nbsp;&nbsp;&nbsp;
+-&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; -<br>DELETE from copy_f_staffs WHERE ID = 25;<br>--OR<br>DELETE FROM copy_f_staffs WHERE last_name = 'Kai' AND first_name = 'Kim';<br>SELECT * FROM copy_f_staffs;<br>ID&nbsp;&nbsp;&nbsp; FIRST_NAME&nbsp;&nbsp;&nbsp;
+LAST_NAME&nbsp;&nbsp;&nbsp; BIRTHDATE&nbsp;&nbsp;&nbsp; SALARY&nbsp;&nbsp;&nbsp; OVERTIME_RATE&nbsp;&nbsp;&nbsp; TRAINING&nbsp;&nbsp;&nbsp; STAFF_TYPE&nbsp;&nbsp;&nbsp; MANAGER_ID&nbsp;&nbsp;&nbsp; MANAGER_BUDGET&nbsp;&nbsp;&nbsp; MANAGER_TARGET<br>12&nbsp;&nbsp;&nbsp;
+Sue&nbsp;&nbsp;&nbsp; Doe&nbsp;&nbsp;&nbsp; 01-Jul-1980&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp; 10.25&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Order Taker&nbsp;&nbsp;&nbsp; 19&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; -<br>9&nbsp;&nbsp;&nbsp; Bob&nbsp;&nbsp;&nbsp;
+Miller&nbsp;&nbsp;&nbsp; 19-Mar-1979&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Grill&nbsp;&nbsp;&nbsp; Cook&nbsp;&nbsp;&nbsp; 19&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; -<br>19&nbsp;&nbsp;&nbsp; Monique&nbsp;&nbsp;&nbsp; Tuttle&nbsp;&nbsp;&nbsp;
+30-Mar-1969&nbsp;&nbsp;&nbsp; 60&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Manager&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; 50000<br>/*<br>10.Create a copy of the employees table and call it lesson7_emp;<br>Once this table exists, write a
+correlated delete statement that will delete any employees from the lesson7_employees table that also exist in the job_history table.<br>*/<br>CREATE TABLE lesson7_emp AS SELECT * FROM employees;<br>ALTER TABLE lesson7_emp ADD CONSTRAINT lesson7_emp_pk
+PRIMARY KEY (employee_id);<br>DELETE lesson7_emp l WHERE employee_id IN (SELECT employee_id&nbsp; FROM job_history WHERE employee_id = l.employee_id);<br>SELECT l.employee_id&nbsp; FROM job_history j, lesson7_emp l WHERE j.employee_id = l.employee_id;
+-- jedná se o 8 záznamů<br>
+<p>/*12_3/2</p>
+<p>Currently, the Global Foods F_PROMOTIONAL_MENUS table START_DATE column does not</p>
+<p>have SYSDATE set as DEFAULT. Your manager has decided she would like to be able to se_t the</p>
+<p>starting date of promotions to the current day for some entries. This will require three steps:*/</p>
+<p><br></p>
+<p>/*a. In your schema, Make a copy of the Global Foods F_PROMOTIONAL_MENUS table using the</p>
+<p>following SQL statement:*/</p>
+<p><br></p>
+<p>CREATE TABLE copy_f_promotional_menus AS (SELECT * FROM f_promotional_menus);</p>
+<p><br></p>
+<p>/*b. Alter the current START_DATE column attributes using:*/</p>
+<p><br></p>
+<p>ALTER TABLE copy_f_promotional_menus MODIFY(start_date DATE DEFAULT SYSDATE);</p>
+<p>ALTER TABLE copy_f_promotional_menus MODIFY(start_date DEFAULT SYSDATE);-- ? starší verze</p>
+<p><br></p>
+<p>+ doplnění přidání primárního klíče</p>
+<p>ALTER TABLE copy_f_promotional_menus ADD PRIMARY KEY(code);</p>
+<p><br></p>
+<p>/*c. INSERT the new information and check to verify the results.</p>
+<p>INSERT a new row into the copy_f_promotional_menus table for the manager’s new</p>
+<p>promotion. The promotion code is 120. The name of the promotion is ‘New Customer.’ Enter</p>
+<p>DEFAULT for the start date and '01-Jun-2005' for the ending date. The giveaway is a 10-%</p>
+<p>discount coupon. What was the correct syntax used?*/</p>
+<p><br></p>
+<p>INSERT INTO copy_f_promotional_menus (code, name, start_date, end_date, give_away)</p>
+<p>VALUES( 120, 'New Customer', DEFAULT, '01-Jun-2005', '10% discount coupon');</p>
+<p>SELECT * FROM copy_f_promotional_menus;</p>
+<p>/*12_3/3</p>
+<p>Allison Plumb, the event planning manager for DJs on Demand, has just given you the following</p>
+<p>list of CDs she acquired from a company going out of business. She wants a new updated list of</p>
+<p>CDs in inventory in an hour, but she doesn’t want the original D_CDS table changed. Prepare an</p>
+<p>updated inventory list just for her.*/</p>
+<p>/*a. Assign new cd_numbers to each new CD acquired.*/</p>
+<p><br></p>
+<p>/*b. Create a copy of the D_CDS table called manager_copy_d_cds. What was the correct syntax</p>
+<p>used?*/</p>
+<p>CREATE TABLE manager_copy_d_cds AS (SELECT * FROM d_cds);</p>
+<p>ALTER TABLE manager_copy_d_cds ADD PRIMARY KEY (cd_number);</p>
+<p><br></p>
+<p>/*c. INSERT into the manager_copy_d_cds table each new CD title using an INSERT statement.</p>
+<p>Make up one example or use this data: 20, 'Hello World Here I Am', 'Middle Earth Records', '1998'*/</p>
+<p>What was the correct syntax used?</p>
+<p><br></p>
+<p>INSERT INTO manager_copy_d_cds (cd_number, title, producer, year) VALUES(20, 'Hello World Here I Am', 'Middle Earth Records', '1998');</p>
+<p><br></p>
+<p>/*d. Use a merge statement to add to the manager_copy_d_cds table, the CDs from the original table. If there is a match, update the title and year. If not, insert the data from the original table. What was the correct syntax used?*/</p>
+<p><br></p>
+<p>MERGE INTO manager_copy_d_cds c USING d_cds d</p>
+<p>ON (c.cd_number = d.cd_number)</p>
+<p>WHEN MATCHED THEN UPDATE SET</p>
+<p>c.title = d.title,</p>
+<p>c.producer = d.producer,</p>
+<p>c.year = d.year</p>
+<p>WHEN NOT MATCHED THEN INSERT</p>
+<p>VALUES (d.cd_number, d.title, d.producer, d.year);</p>
+<p><br></p>
+<p>/*12_3/4</p>
+<p>Run the following 3 statements to create 3 new tables for use in a Multi-table insert statement. All</p>
+<p>3 tables should be empty on creation, hence the WHERE 1=2 condition in the WHERE clause.</p>
+<p>*/</p>
+<p>CREATE TABLE sal_history (employee_id, hire_date, salary) AS SELECT employee_id, hire_date, salary FROM employees WHERE 1=2;</p>
+<p>CREATE TABLE mgr_history (employee_id, manager_id, salary) AS SELECT employee_id, manager_id, salary FROM employees WHERE 1=2;</p>
+<p>CREATE TABLE special_sal (employee_id, salary) AS SELECT employee_id, salary FROM employees WHERE 1=2;</p>
+<p><br></p>
+<p>-- Tento příkaz provede vytvoření tabulek tak, že převezme strukturu tabulek ze zdrojových tabulek, opět nevytvoří PK a constraints, WHERE 1=2 zajistí, že nedojde ke zkopírování dat ze zdrojových tabulek.</p>
+<p><br></p>
+<p>SELECT * FROM sal_history;</p>
+<p>SELECT * FROM mgr_history;</p>
+<p>SELECT * FROM special_sal;</p>
+<p><br></p>
+<p>&nbsp;-- všechny tabulky tedy vypíší: no data found</p>
+<p><br></p>
+<p>DESCRIBE sal_history;</p>
+<p><br></p>
+<p>ALTER TABLE sal_history ADD CONSTRAINT sal_history_pk PRIMARY KEY(employee_id);</p>
+<p>ALTER TABLE mgr_history ADD CONSTRAINT mgr_history_pk PRIMARY KEY(employee_id);</p>
+<p>ALTER TABLE special_sal ADD CONSTRAINT special_sal_pk PRIMARY KEY(employee_id);</p>
+<p><br></p>
+<p>/*Once the tables exist in your account, write a Multi-Table insert statement to first select the</p>
+<p>employee_id, hire_date, salary, and manager_id of all employees. If the salary is more than</p>
+<p>20000 insert the employee_id and salary into the special_sal table. Insert the details of</p>
+<p>employee_id, hire_date, and salary into the sal_history table. Insert the employee_id,</p>
+<p>manager_id, and salary into the mgr_history table.*/</p>
+<p><br></p>
+<p>INSERT ALL</p>
+<p>WHEN salary &gt; 20000 THEN</p>
+<p>INTO special_sal VALUES (employee_id, salary)</p>
+<p>ELSE</p>
+<p>INTO sal_history VALUES (employee_id, hire_date, salary)</p>
+<p>INTO mgr_history VALUES (employee_id, manager_id, salary)</p>
+<p>SELECT employee_id, hire_date, manager_id, salary FROM employees;</p>
+<p><br></p>
+<p>/*You should get a message back saying 39 rows were inserted. Verify you get this message and</p>
+<p>verify you have the following number of rows in each table:</p>
+<p>Sal_history: 19 rows</p>
+<p>Mgr_history: 19 rows</p>
+<p>Special_sal: 1*/</p>
+<p><br></p>
+<p>SELECT * FROM special_sal;</p>
+<p>SELECT * FROM sal_history;</p>
+<p>SELECT * FROM mgr_history;</p>
+<p><br></p>
+<p>SELECT count(*) FROM sal_history;--19</p>
+<p>SELECT count(*) FROM mgr_history;--19</p>
+<p>SELECT count(*) FROM special_sal;--1</p>

@@ -1,0 +1,157 @@
+<p></p>
+<p><b>2-1&nbsp;</b></p>
+<p>Definice: fyzický model, konceptuální model, data, datové modelování</p>
+<p>1) Entita dům, může se lišit počty dveří, oken, s garáží/bez garáže, počet místností, jednopodlažní/vícepodlažní, apod.</p>
+<p>2) Konceptuální model - donáška, produkty, způsoby platby. Fyzický model - automatizované platby, druhy platebních šeků, služba donáška? - možná do budoucna.</p>
+<p>3) Důvody pro tvoření konceptuálního modelu:</p>
+<p>jednoznačný popis potřeb organizace<br>zdokumentování důležitého co organizace potřebuje<br>stanovení pravidel, jednotnosti, apod.<br>4) Konceptuální model - jednoduchý návrh objednávkového systému, fyzický model - objednávkový systém propojený na účetní
+    systém a rozšířený o různé možnosti plateb<br></p>
+<p><b>2-2</b></p>
+<p>Definice: povinný, nehmatatelný/nehmotný, unikátní identifikátor (UID), instance, atribut, volitelný, entita, null, volatilní -nestálý, hmatatelný, datový typ, jednohodnotový</p>
+<p>1)Student - id, jméno, příjmení, datum narození, telefonní číslo, kontakt na rodiče, poznámky, apod.</p>
+<p>2) Zákazník - Kačenka Milá, Služby - barva, střih, manikůra, pedikůra, kosmetické poradenství, apod. Zaměstnanci - stylista/ka, kadeřník/ce, recepční, kosmetička, manikérka, apod. Produkty - šampón, barva, maska, čistící tonikum, lak na vlasy, lak na
+    nehty, výživa, apod. Zařízení - fén na vlasy, nůžky, pilník na nehty, holičské křeslo, apod.</p>
+<p>3) Vehicle - entita, diet cola -instance, price - atribut, customer number - atribut, green (zeleň) - atribut</p>
+<p>4) song-title, description,release date, type</p>
+<p>event-description, venue, type</p>
+<p>customer-first name, phone number, last name, email address</p>
+<p>5) STUDENT - student ID</p>
+<p>MOVIE - přidat umělý UID</p>
+<p>LOCKER - number (nešťastné označení)</p>
+<p>6) a) owner, store, movie, DVD, VHS tape</p>
+<p>b) media, customer, movie, actor</p>
+<p>c) ID_media, ID_customer, ID_movie, ID_actor</p>
+<p>7) Věk je volatilní atribut, jelikož se každým rokem mění.</p>
+<p>8) Datum narození je nevolatilní, jelikož se němění.</p>
+<p>9) Restaurace :-) - objednávka, jídlo, zákazník, položka objednávky, apod.</p>
+<p><b>2-3</b></p>
+<p>Definice: implementation free (bez vazby na konkrétní systém), ERD</p>
+<p>1) Nepravda</p>
+<p>2) Pravda</p>
+<p>3) Popisuje potřebné informace, hlídá duplicity dat, hlídá redundanci, model ukazující zařazení atributů firmy</p>
+<p>4) ERD</p>
+<p><b>3-1</b></p>
+<p>Definice: kardinalita, relace, povinnost/nepovinnost vstupovat do vztahu</p>
+<p>1) Každý zaměstnanec musí mít jednu nebo více pracovních pozic. Každá pracovní pozice může být přiřazena jednomu zaměstnanci.</p>
+<p>2) Každý číšník může být přiřazen jedné nebo více objednávek a každá objednávka může být přiřazena právě jednomu číšníkovi.</p>
+<p>3) Každý rodič může vyzvednout jedno nebo více dětí a dítě musí být vyzvednuto jedním nebo více rodiči.</p>
+<p>4) Každý vyučující může dohlížet na jednoho nebo více studentů a každý student může být dozorován jedním nebo více vyučujícími.</p>
+<p>5) -</p>
+<p><b>3-2</b></p>
+<p>1)</p>
+<p>Stylista (id_stylisty, jmeno, prijemni, telefonni_cislo, dovednosti, ...)&nbsp;</p>
+<p>Klient (id_klienta, jmeno, prijmeni, telefonni_cislo)</p>
+<p>Stylista může pracovat na jednom nebo více klientech a klient musí být přiřazen právě jednomu stylistovi.</p>
+<p>2)&nbsp;</p>
+<p>Skupina (id_skupiny, datum_zalozeni, nazev,...)<br>Hudebník (id_hudebnika, jmeno, prijmeni, adresa, telefonni_cislo, dostupny_od, dostupny_do, hodinova_sazba, ....)&nbsp;</p>
+<p>Každá skupina musí být složena z jendoho nebo více hudebníků a každý hudebník může náležet do právě jedné skupiny.</p>
+<p>3) Vyučujicí (id_vyucujici, jmeno, prijmeni, adresa, telefoni_cislo, email,...)</p>
+<p>Kurz (id_kurzu, nazev, popis,...)</p>
+<p>Třída (id_tridy, oznaceni, lekce_od, lekce_do, ...)</p>
+<p>Každý vyučující může být přiřazen do jedné nebo více tříd a každá třída musí být přiřazena jednomu vyučujícímu. Každý kurz může být nabízen skrz jednu nebo více tříd a každá třída musí být nabízet právě jedn kurz.</p>
+<p><b>3-3</b></p>
+<p>Definice: ERDish</p>
+<p>1) b)</p>
+<p>2) "kuří noha" a nebo jednoduchá linka</p>
+<p>3) nepřerušovaná čára</p>
+<p>4) Každý fotoaparát může být použit jedním nebo více fotografy a každý fotograf musí použít právě jeden fotoaparát.</p>
+<p>5) Každá osoba musí mít místo narození právě v jednom městě a v každém městě se může narodit jedna nebo více osob.</p>
+<p>V každém městě žije jedna nebo více osob a každá osoba musí mít město, ve kterém žije.</p>
+<p>Každá osoba může navštívit několik měst a město musí být navštíveno jednou nebo více osob.</p>
+<p>Každá osoba může být starostou města a každé město může mít svého jednoho starostu.</p>
+<p><br></p>
+<p></p>
+<p></p>
+<p><b>4-1 Supertypy a Subtypy</b></p>
+<p>Definice:</p>
+<p>Kompletní (supertyp a subtyp) - plný výčet suptypů.<br>Supertyp - Entita, která má další entity jako podtypy.<br>Subtyp - Něco na co může být entita dále rozdělena na základě společných atributů anebo vztahů.<br>Vzájemně se vylučující - Každá instance
+    supertypu je instancí pouze jednoho možného podtypu.</p>
+<p>1) Uveďte, která položka z následujícího seznamu je entita supertypu a které položky jsou podtypy této entity.<br>Amputace = podtyp<br>Zrakové poškození = podtyp<br>Sluchové postižení = podtyp<br>Tělesné postižení = supertyp<br>Paralýza = podtyp<br></p>
+<p>2) U každého uvedeného pravidla uveďte, zda je pravidlo použitelné pro supertypy nebo podtypy.<br>Podtypy - sdílejí společné atributy<br>Podtypy - Zdědí všechny atributy a vztahy entity<br>Podtyp - Nikdy neexistuje sám<br>Supertyp - Obsahuje atributy,
+    které mají všechny instance společné<br></p>
+<p>3) Vyjmenujte tři věci, podle kterých je nutné se řídit při modelování supertypů a podtypů.<br></p>
+<p>a) Rozhodnout, zda se jedná o supertyp nebo subtyp.<br>b) Kolik subtypů bude modelováno? Plný či částečný výčet subtypů?<br>c) Jsou subtypy vzájemně vylučitelné?</p>
+<p>4) Na obrázku najděte nesprávné podtypy. Vysvětlete, proč je podtyp nesprávný, model opravte.</p>
+<p>- Subtypy AUTOMOBILU se vzájemně nevylučují. 4DVEŘOVÉ VOZIDLO může být také SEDAN anebo SPORTOVNÍ VOZIDLO.<br>- 4DVEŘOVÉ VOZIDLO není podtyp, ale jedná se o atribut počet dveří, který by měl být v supertypu. <br>- Dalším subtypem by mohl být jiný typy
+    vozidla např. SUV, apod.<br><br>- Supertyp BUDOVA by měl mít další subtypy nejen dům, ale také například KANCELÁŘSKÁ BUDOVA, ŠKOLA, PRŮMYSLOVÁ BUDOVA, apod.</p>
+<p>5) Supertyp OBLEČENÍ, subtyp SUKNĚ, HELENKA, KALHOTY, apod. Supertyp OBLEČENÍ by měl mít oecné atributy jako velikost, délka, šířka, apod.</p>
+<p><b>4-2 - DOKUMENTAČNÍ PRAVIDLA</b></p>
+<p>Definice:<br>strukturální pravidla - informace, které mají být uloženy v určité podobě (formě)<br>business pravidla - pravidla daná společností/institucí, která určují chování společnosti<br>procedurální pravidla - pravidla, která se odvijí od obchodních
+    pravidel a říká, jak má být co vykonáno</p>
+<p>1)<br></p>
+<p>a) Strukturální pravidla:</p>
+<ul>
+    <li>Pacient je někdo, kdo je přijat do nemocnice.</li>
+    <li>Každé přiřazení pokoje musí obsahovat číslo budovy a číslo pokoje.</li>
+    <li>Každý pokoj může být obsazen jedním nebo více pacienty.</li>
+    <li>Lékař musí mít platnou licenci k výkonu povolání. <br></li>
+    <li>Každý lék musí být předepsán lékařem. <br></li>
+    <li>Každý předepsaný lék musí mít štítek s číslem, dávkováním, délkou léčby a datem expirace.</li>
+    <li>U všech léků musí být zaznamenán identifikující kód, název a cena léku. <br></li>
+    <li>Každý předpis musí mít číslo a datum.</li>
+    <li>Každý lékař může být přidělen více než jednomu pacientovi.</li>
+    <li>Každý pacient musí mít přiděleného lékaře.</li>
+</ul>
+<p>b) Procedurální pravidla:</p>
+<ul>
+    <li>Změny předpisů mohou provádět pouze lékaři s platnou licencí.</li>
+    <li>Pacienti nemohou doplňovat recepty bez podpisu lékaře.</li>
+    <li>Lékař nemůže odstraňovat štítky z léků.</li>
+    <li>Pacienti nemohou změnit nemocniční pokoje bez doporučení lékaře.</li>
+    <li>Zdravotní sestry nemohou zařazovat pacienty do pokojů bez bez souhlasu lékaře.</li>
+</ul>
+<p>c) Programová pravidla:</p>
+<ul>
+    <li>Náklady na léky jsou jednotlivým pacientům účtovány dle jejich pojištění v den propuštění pacienta.</li>
+    <li>Lékař vykazuje úkony dle tabulek jednotlivých pojišťoven.</li>
+</ul>
+<p>2)</p>
+<p>Obchodními pravidly jsou:</p>
+<ul>
+    <li>pro každý film v inventáři jsou sledováni herci,</li>
+    <li>u každého herce jsou sledována rodná jména herců,</li>
+    <li>pro každého herce je sledováno datum narození herce.</li>
+</ul>
+<p>3)</p>
+<p>Obchodními pravidly jsou:</p>
+<ul>
+    <li>Zákazníci musí mít členské číslo.</li>
+    <li>Filmy jsou půjčovány pouze registrovaným zákazníkům.</li>
+    <li>Zákazníci musí mít dobré hodnocení pro další výpůjčky.</li>
+    <li>Informace o zákazníkovi zahrnují jméno a příjmení, telefonní číslo a adresu,...</li>
+</ul>
+<p><b>5-1 Přenositelnost relací</b></p>
+<p>Přenositelná relace - vztah, který říká, že je možné změnit instanci A s jinou instancí B</p>
+<p>Nepřenositelná relace - vztah, který říká, že není možné provést změnu vztahu mezi instancí A a instancí B</p>
+<p><img src="https://student.delta-studenti.cz/brokenfile.php#/55865/user/draft/863383302/1.PNG" alt="a_b" class="img-responsive atto_image_button_text-bottom" width="908" height="318"><br></p>
+<p><br></p>
+<p><img src="https://student.delta-studenti.cz/brokenfile.php#/55865/user/draft/863383302/2.PNG" alt="c_g" class="img-responsive atto_image_button_text-bottom" width="885" height="901"></p>
+<p><img src="https://student.delta-studenti.cz/brokenfile.php#/55865/user/draft/863383302/3.PNG" alt="h" class="img-responsive atto_image_button_text-bottom" width="874" height="174"></p>
+<p><br></p>
+<p><img src="https://student.delta-studenti.cz/brokenfile.php#/55865/user/draft/863383302/4.PNG" alt="i_m" class="img-responsive atto_image_button_text-bottom" width="893" height="871"></p>
+<p><img src="https://student.delta-studenti.cz/brokenfile.php#/55865/user/draft/863383302/5.PNG" alt="n" class="img-responsive atto_image_button_text-bottom" width="854" height="214"></p>
+<p><b>5-2 Typy relací (konceptuální model)</b></p>
+<p>Definice:</p>
+<p>1:1 - Vztah, kdy každý záznam v tabulce A může souviset s jedním a pouze jedním záznamem v tabulce B a každý záznam v tabulce B se vztahuje k jednomu a pouze jednomu záznamu v tabulce A.<br>1:M - Vztah, kdy jeden záznam v tabulce A může souviset s jedním
+    nebo více záznamy v tabulce B, ale jeden záznam v tabulce B může souviset pouze s jedním záznamem v tabulce A.<br>M:M - Vztah, ve kterém mnoho záznamů v jedné tabulce odpovídá mnoha záznamům v jiné tabulce.<br>Redundatní - zbytečně se opakující relace
+    (také nadbytečná relace)</p>
+<p>1)</p>
+<p>1: M - Instruktor snowboardingu může cvičit jednoho nebo více snowboardistů<br>1: 1 - Kolo je vlastněno dítětem<br>M: M - Pastelky ve třídě mohou používat višchni žáci ve třídě<br>1: 1 - Pas patří konrkétní osobě<br>1: 1 - Slonice porodí slůně</p>
+<p>2) ---</p>
+<p>3) <br></p>
+<p><img src="https://student.delta-studenti.cz/brokenfile.php#/55865/user/draft/863383302/10.PNG" alt="10" class="img-responsive atto_image_button_text-bottom" width="553" height="306"></p>
+<p><b>5-3 Vztah M:M a způsoby jeho řešení</b></p>
+<p><b><i>Barred relace</i></b> - vztah, který je součástí unikátního indentifikátoru entity. Jedinečná identifikace vazební entity často pochází z původního vztahu a je představována pruhy, to je označováno jako barred relace.</p>
+<p><img src="https://student.delta-studenti.cz/brokenfile.php#/55865/user/draft/863383302/job_assigment.PNG?time=1607263981823" alt="job_assignment" class="img-responsive atto_image_button_text-bottom" width="384" height="438"></p>
+<p><i><b>Vazební entita</b></i> - je používána při vztahu M:M, jedná se o vazební či také označovanou jako průnikovou entitu (dále tabulku).</p>
+<p>1)</p>
+<p><img src="https://student.delta-studenti.cz/brokenfile.php#/55865/user/draft/863383302/1_zadani.PNG" alt="1_zadani" class="img-responsive atto_image_button_text-bottom" width="522" height="166"><br></p>
+<p><img src="https://student.delta-studenti.cz/brokenfile.php#/55865/user/draft/863383302/1_vysledek.PNG" alt="1_vysledek" class="img-responsive atto_image_button_text-bottom" width="447" height="310"></p>
+<p><b>5-4 CRUD požadavky</b></p>
+<p>Konzultant - specialista, který poskytuje odborné rady<br>CRUD analýza - Kontrola datového modelu z pohledu požadavků, kontroluje se, zda je možné provádět vytváření, načítání, aktualizace a mazání dat u entit a relací.<br>Funkce - používá se k provádění
+    výpočtů na datech, ke konverzi dat například number to string, apod. <br></p>
+<p>1) <br></p>
+<p>Alter-Update<br>Bring up-Retrieve<br>Change-Update<br>Discard-Delete<br>Enter-Create<br>Find-Retrieve<br>Import-Create<br>Input-Create<br>Load-Create<br>Look up-Retrieve<br>Modify-Update<br>Print-Retrieve<br>Purge-Delete<br>Read-Retrieve<br>Record-Create<br>Remove-Delete<br>Report-Retrieve<br>Trash-Delete<br>View-Retrieve</p>
+<p>2) <br></p>
+<p>Create – Nově přijatí žáci budou vloženy do databáze.<br>Retrieve - Zobrazení známek žáků, docházky, apod.<br>Update - Aktualizace údajů žáků, hodnocení apod.<br>Delete – Po ukončení studia žáků je po uplynutí zákonné lhůty nutné žáky z databáze odstranit.</p>
+<p></p>

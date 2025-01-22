@@ -1,0 +1,42 @@
+<h1>Základní finanční funkce</h1>
+<p>Cílem této přednášky je představit několik finančních funkcí.</p>
+<h3><strong>Funkce Platba</strong></h3>
+<p align="justify">Pomůže vám odpovědět na otázku, jestli si můžete půjčit peníze a kolik zaplatíte navíc.</p>
+<p align="justify">Představte si, že chcete koupit byt v hodnotě 1 500 000 Kč a banka vám na dobu 15 let půjčí peníze na úrok ve výši 6,8 %. Zkuste si tedy předem spočítat, kolik byste měli měsíčně splácet, a také kolik bance za dané období zaplatíte navíc. Právě pro tento účel je vhodná <strong>funkce Platba</strong>, která umí vypočítat velikost pravidelných splátek. </p>
+<h4>Tvar</h4>
+<p><strong>=PLATBA(sazba;pper;souč_hod;bud_hod;typ)</strong></p>
+<p>kde:</p>
+<ul>
+  <li>sazba: je úroková sazba půjčky</li>
+  <li>pper: je počet splátek</li>
+  <li>souč_hod: je současná hodnota půjčky, tato hodnota bude záporná</li>
+  <li>bud_hod: je budoucí hodnota půjčky (je to nepovinný argument; když ho nezadáte, doplní se 0 a znamená to, že půjčku chcete splatit do nulové hodnoty, tedy celou)</li>
+  <li>typ: znamená způsob splátek (zda na začátku období, pak 1, zda na konci období, pak 0).</li></ul>
+<p>Video-návod k funkci Platba:&nbsp;<a href="https://www.youtube.com/watch?v=-rbe1oPYCMQ">https://www.youtube.com/watch?v=-rbe1oPYCMQ</a></p><h3><strong><br></strong></h3><h3><strong>Funkce Počet období</strong></h3>
+<p align="justify">Pomůže vám odpovědět na otázku, jak dlouho budete splácet.</p>
+<p align="justify">Například potřebujete úvěr 1 278 000 Kč a v bance dostanete úrok ve výši 6,2 %. Dále víte, kolik jste přibližně schopni splácet měsíčně, zajímalo by vás, na jak dlouho si máte půjčku protáhnout, zda na 10,15 či na 30 let.</p>
+<h4>Tvar</h4>
+<p><strong>=POČET.OBDOBÍ(sazba;splátka;souč_hod;bud_hod;typ)</strong></p>
+<p>kde:</p>
+<ul>
+  <li>sazba: je úroková sazba půjčky</li>
+  <li>splátka:je výše splátky</li>
+  <li>souč_hod: je současná hodnota půjčky tato hodnota bude záporná</li>
+  <li>bud_hod: je budoucí hodnota půjčky (je to nepovinný argument; když ho nezadáte, doplní se 0 a znamená to, že půjčku chcete splatit do nulové hodnoty, tedy celou)</li>
+  <li>typ: znamená způsob splátek (zda na začátku období, pak 1, zda na konci období, pak 0).</li></ul>
+<p style="text-align: left;">Zdroj:&nbsp;<a href="https://support.microsoft.com/cs-cz/office/funkce-po%c4%8det-obdob%c3%ad-240535b5-6653-4d2d-bfcf-b6a38151d815?ui=cs-cz&amp;rs=cs-cz&amp;ad=cz">https://support.microsoft.com/cs-cz/office/funkce-po%c4%8det-obdob%c3%ad-240535b5-6653-4d2d-bfcf-b6a38151d815?ui=cs-cz&amp;rs=cs-cz&amp;ad=cz</a></p><h3 style="text-align: left;"><strong><br></strong></h3><h3 style="text-align: left;"><strong>Funkce Úroková míra</strong></h3>
+<p>Pomůže nám odpovědět na otázku, jaká je úroková míra.</p>
+<p>V televizi jste viděli reklamu na půjčku na 30000 Kč s tím, že měsíčně bude splácet 1000 Kč po dobu 5 let. Jaká je tedy úroková míra.</p>
+<h4>Tvar</h4>
+<p><span style="font-weight: bold;">=Úroková.míra(pper;splátka;souč_hod;bud_hod;typ;odhad)</span></p>
+<p>kde:</p>
+<ul>
+  <li>pper: je počet splátek</li>
+  <li>sazba: je úroková sazba půjčky</li>
+  <li>splátka:je výše splátky</li>
+  <li>souč_hod: je současná hodnota půjčky tato hodnota bude záporná</li>
+  <li>bud_hod: je budoucí hodnota půjčky (je to nepovinný argument; když ho nezadáte, doplní se 0 a znamená to, že půjčku chcete splatit do nulové hodnoty, tedy celou)</li>
+  <li>typ: znamená způsob splátek (zda na začátku období, pak 1, zda na konci období, pak 0)</li>
+  <li>odhad: váš odhad úroku.</li></ul><div style="text-align: center;"><div style="text-align: left;">Zdroj:&nbsp;<a href="https://support.office.com/cs-cz/article/funkce-%C3%9Arokov%C3%81-m%C3%8Dra-9f665657-4a7e-4bb7-a030-83fc59e748ce">https://support.office.com/cs-cz/article/funkce-%C3%9Arokov%C3%81-m%C3%8Dra-9f665657-4a7e-4bb7-a030-83fc59e748ce</a></div></div>
+<h3><br></h3><h3><strong>Spoření</strong></h3>Ke zjištění kolik musíte spořit, abych jste za danou dobu naspořili určitou částku při daném ročním úroku, použijete<span style="font-weight: bold;"> funkci Platba.<br></span><div style="text-align: center;">
+  <div style="text-align: left;"><br></div><div style="text-align: left;">Podobně nám slouží i<span style="font-weight: bold;"> funkce Počet období</span>, pomocí nichž můžeme zjistit, jak dlouho budete danou částku spořit.</div><div style="text-align: left;"><div style="text-align: center;"><br></div></div></div>Zdroj:&nbsp;<a href="https://www.vimvic.cz/kurz/hrave-na-sporeni-a-uvery-s-ms-excel">https://www.vimvic.cz/kurz/hrave-na-sporeni-a-uvery-s-ms-excel</a>&nbsp;,&nbsp;<a href="https://support.office.com/cs-cz/article/Finan%C4%8Dn%C3%AD-funkce-odkazy-5658d81e-6035-4f24-89c1-fbf124c2b1d8">https://support.office.com/cs-cz/article/Finan%C4%8Dn%C3%AD-funkce-odkazy-5658d81e-6035-4f24-89c1-fbf124c2b1d8<br></a><p></p><p></p>
